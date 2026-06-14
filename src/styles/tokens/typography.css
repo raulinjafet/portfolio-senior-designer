@@ -1,0 +1,86 @@
+/* ─── Typography scale tokens ─── */
+:root {
+  /* Eyebrow / labels */
+  --font-eyebrow: 0.75rem;
+  --font-eyebrow-sm: 0.875rem;
+  --leading-eyebrow: 1rem;
+  --tracking-eyebrow: 0.05em;
+
+  /* Navigation */
+  --font-nav: 0.875rem;
+  --font-nav-label: 0.75rem;
+  --font-nav-label-sm: 0.875rem;
+
+  /* Body */
+  --font-body: 1.125rem;
+  --font-body-lg: 1.25rem;
+  --leading-body: 1.625;
+  --leading-body-relaxed: 1.75;
+
+  /* Links / buttons */
+  --font-link: 1rem;
+  --font-link-lg: 1.125rem;
+
+  /* Section titles (H2) */
+  --font-section: 1.875rem;
+  --font-section-md: 2.25rem;
+  --font-section-lg: 2.75rem;
+  --leading-section: 1.15;
+
+  /* Project titles (H3) */
+  --font-project: 1.25rem;
+  --font-project-md: 1.5rem;
+  --font-project-lg: 1.875rem;
+
+  /* Hero display (H1) */
+  --font-hero: 2.25rem;
+  --font-hero-md: 3.75rem;
+  --font-hero-lg: 4.5rem;
+  --leading-hero: 1.1;
+
+  /* Hero metrics */
+  --font-metric: 2.25rem;
+  --font-metric-lg: 3rem;
+
+  /* CTA section */
+  --font-cta: 1.875rem;
+  --font-cta-md: 3rem;
+  --font-cta-lg: 3.75rem;
+
+  /* Footer */
+  --font-footer: 1.125rem;
+
+  /* Cursor label */
+  --font-cursor: 0.6875rem;
+  --tracking-cursor: 0.18em;
+
+  /* Case study */
+  --font-case-hero: 2.25rem;
+  --font-case-hero-md: 3rem;
+  --font-case-hero-lg: 3.5rem;
+  --leading-case-hero-lg: 4.125rem;
+
+  --font-case-section: 1.5rem;
+  --font-case-section-md: 2rem;
+  --leading-case-section: 2.5rem;
+
+  --font-case-lead: 1.25rem;
+  --font-case-lead-md: 1.5rem;
+  --leading-case-lead: 2.25rem;
+
+  --font-case-body: 1.125rem;
+  --leading-case-body: 1.5rem;
+  --leading-case-body-loose: 2rem;
+
+  --font-case-result: 1.875rem;
+  --font-case-result-md: 2.5rem;
+  --leading-case-result: 3rem;
+
+  --font-case-impact: 1.5rem;
+  --font-case-impact-md: 2rem;
+
+  /* Project list meta */
+  --font-project-index: 0.875rem;
+  --font-project-meta: 0.875rem;
+  --font-project-meta-lg: 1rem;
+}
