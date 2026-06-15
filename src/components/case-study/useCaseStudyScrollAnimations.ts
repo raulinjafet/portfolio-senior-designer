@@ -8,6 +8,7 @@ import { RefObject } from "react";
 gsap.registerPlugin(ScrollTrigger);
 
 const SCROLL_START = "top 82%";
+const SCROLL_START_PRIMARY = "top 92%";
 
 export function useCaseStudyScrollAnimations(
   pageRef: RefObject<HTMLElement | null>,
@@ -36,10 +37,12 @@ export function useCaseStudyScrollAnimations(
       }
 
       sections.forEach((section) => {
+        const isPrimarySection = section.classList.contains("cs-primary-wrap");
+
         const timeline = gsap.timeline({
           scrollTrigger: {
             trigger: section,
-            start: SCROLL_START,
+            start: isPrimarySection ? SCROLL_START_PRIMARY : SCROLL_START,
             once: true,
           },
         });
@@ -48,7 +51,9 @@ export function useCaseStudyScrollAnimations(
         const lines = section.querySelectorAll(".cs-animate-line");
         const titles = section.querySelectorAll(".cs-animate-title");
         const texts = section.querySelectorAll(".cs-animate-text");
-        const media = section.querySelectorAll(".cs-animate-media");
+        const media = section.querySelectorAll(
+          ".cs-animate-media:not(.cs-primary-block)",
+        );
         const staggerItems = section.querySelectorAll(
           ".cs-animate-stagger-item",
         );

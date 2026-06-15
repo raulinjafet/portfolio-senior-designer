@@ -278,7 +278,7 @@ export default function DisenarClaridadCaseStudy() {
       </section>
 
       <section className="cs-section cs-primary-wrap">
-        <div className="cs-animate-media cs-primary-block cs-primary-block--split mx-auto max-w-7xl">
+        <div className="cs-primary-block cs-primary-block--split mx-auto max-w-7xl">
           <div className="space-y-4">
             <div className="cs-animate-badge">
               <CaseStudyBadge variant="on-primary">Aprendizaje</CaseStudyBadge>

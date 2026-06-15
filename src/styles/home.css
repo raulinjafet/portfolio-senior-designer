@@ -135,12 +135,19 @@
   }
 
   .about-team-wrap {
+    display: none;
     position: relative;
     overflow: hidden;
     border-radius: var(--radius-large);
     width: 100%;
     aspect-ratio: 444 / 296;
     flex-shrink: 0;
+  }
+
+  @media (min-width: 768px) {
+    .about-team-wrap {
+      display: block;
+    }
   }
 
   @media (min-width: 1024px) {
