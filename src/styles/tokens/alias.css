@@ -1,0 +1,29 @@
+/* ─── Layer 2: Alias tokens (Figma → color/alias) ─── */
+:root {
+  /* Base & layers */
+  --alias-base-default: var(--color-neutral-0);
+  --alias-layer-01: var(--color-neutral-0);
+  --alias-layer-02: var(--color-neutral-600);
+  --alias-layer-03: var(--color-neutral-100);
+  --alias-layer-04: var(--color-neutral-700);
+  --alias-layer-05: var(--color-green-500);
+
+  /* Borders */
+  --alias-border-01: var(--color-neutral-200);
+  --alias-border-02: var(--color-neutral-500);
+  --alias-border-03: var(--color-neutral-600);
+  --alias-border-04: var(--color-green-300);
+
+  /* Text */
+  --alias-text-default: var(--color-neutral-600);
+  --alias-text-inverse: var(--color-green-0);
+  --alias-text-accent-title: var(--color-neutral-400);
+  --alias-text-accent-neutral: var(--color-neutral-500);
+  --alias-text-accent-neutral-inverse: var(--color-neutral-300);
+  --alias-text-accent-brand: var(--color-green-500);
+  --alias-text-interactive: var(--color-green-500);
+
+  /* Icons */
+  --alias-icon-01: var(--color-green-500);
+  --alias-icon-inverse: var(--color-neutral-0);
+}

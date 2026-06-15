@@ -1,0 +1,16 @@
+/* Page transition curtain — Figma color/layer-02 (--hero) */
+.page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background-color: var(--hero);
+  transform: translate3d(0, 0, 0);
+  pointer-events: auto;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    display: none !important;
+  }
+}

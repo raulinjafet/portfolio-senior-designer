@@ -1,0 +1,114 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+@import "./tokens/brand.css";
+@import "./tokens/alias.css";
+@import "./tokens/spec.css";
+@import "./tokens/spacing.css";
+@import "./tokens/radius.css";
+@import "./tokens/layout.css";
+@import "./tokens/typography-primitives.css";
+@import "./tokens/colors.css";
+@import "./tokens/typography.css";
+@import "./tokens/typography-utilities.css";
+@import "./tokens/layout-utilities.css";
+@import "./tokens/buttons.css";
+@import "./hero.css";
+@import "./home.css";
+@import "./case-study.css";
+@import "./page-transition.css";
+
+@theme inline {
+  --font-sans: var(--font-red-hat-display);
+
+  /* Colors → Tailwind utilities */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-surface: var(--surface);
+  --color-surface-subtle: var(--surface-subtle);
+  --color-card: var(--card);
+  --color-elevated: var(--elevated);
+  --color-inverse: var(--inverse);
+  --color-inverse-border: var(--inverse-border);
+  --color-on-inverse: var(--on-inverse);
+  --color-hero: var(--hero);
+  --color-on-hero: var(--on-hero);
+  --color-muted: var(--muted);
+  --color-foreground-subtle: var(--foreground-subtle);
+  --color-foreground-faint: var(--foreground-faint);
+  --color-foreground-soft: var(--foreground-soft);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-divider: var(--foreground-divider);
+  --color-foreground-tag-border: var(--foreground-tag-border);
+  --color-primary-border: var(--primary-border);
+  --color-on-hero-subtle: var(--on-hero-subtle);
+  --color-on-hero-faint: var(--on-hero-faint);
+  --color-on-primary: var(--on-primary);
+  --color-on-primary-subtle: var(--on-primary-subtle);
+  --color-on-primary-border: var(--on-primary-border);
+  --color-preview-bg: var(--preview-bg);
+  --color-avatar-border: var(--avatar-border);
+}
+
+html {
+  color-scheme: light;
+  overflow-x: clip;
+}
+
+html,
+body {
+  max-width: 100%;
+}
+
+body {
+  @apply bg-background text-foreground font-sans;
+}
+
+@media (pointer: fine) {
+  html,
+  body {
+    cursor: none;
+  }
+}
+
+.liquid-glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-inset);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(160%);
+}
+
+.liquid-glass-nav {
+  background: var(--glass-bg);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-inset);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(160%);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .liquid-glass,
+  .liquid-glass-nav {
+    background: var(--glass-fallback);
+  }
+}
+
+.header-shell {
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-shell {
+    transition-duration: 0.01ms;
+  }
+
+  .header-mobile-menu,
+  .header-menu-icon span {
+    transition-duration: 0.01ms;
+  }
+}

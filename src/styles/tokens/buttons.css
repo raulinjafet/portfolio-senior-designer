@@ -1,0 +1,77 @@
+@layer components {
+  /* ─── Figma button/spec tokens ─── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-xlarge);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--leading-body-figma);
+    text-decoration: none;
+    transition:
+      color 0.3s ease-out,
+      background-color 0.3s ease-out,
+      border-color 0.3s ease-out;
+  }
+
+  /* button/secondary_small — header CTA */
+  .btn-secondary-sm {
+    border: 1px solid var(--spec-btn-secondary-border-enabled);
+    color: var(--spec-btn-secondary-text-enabled);
+    padding: var(--spacing-2x-small) var(--spacing-x-small);
+    font-size: var(--font-size-xs);
+  }
+
+  .btn-secondary-sm:hover {
+    background-color: var(--spec-btn-secondary-bg-hover);
+    border-color: var(--spec-btn-secondary-bg-hover);
+    color: var(--spec-btn-secondary-text-hover);
+  }
+
+  /* button/secondary_large — contact CTA */
+  .btn-secondary-lg {
+    border: 1px solid var(--spec-btn-secondary-border-enabled);
+    color: var(--spec-btn-secondary-text-enabled);
+    padding: var(--spacing-small);
+    font-size: var(--font-size-sm);
+  }
+
+  .btn-secondary-lg:hover {
+    background-color: var(--spec-btn-secondary-bg-hover);
+    border-color: var(--spec-btn-secondary-bg-hover);
+    color: var(--spec-btn-secondary-text-hover);
+  }
+
+  /* button/tertiary_large — contact secondary action */
+  .btn-tertiary-lg {
+    background-color: var(--spec-btn-tertiary-bg-enabled);
+    color: var(--spec-btn-tertiary-text-enabled);
+    padding: var(--spacing-small);
+    font-size: var(--font-size-sm);
+  }
+
+  .btn-tertiary-lg:hover {
+    background-color: var(--spec-btn-tertiary-bg-hover);
+    color: var(--spec-btn-tertiary-text-hover);
+  }
+
+  /* Case study — button-back-to-home */
+  .btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-3x-small);
+    border: 2px solid var(--alias-border-02);
+    border-radius: 100px;
+    background-color: var(--hero);
+    padding: var(--spacing-2x-small) var(--spacing-x-small);
+    color: var(--on-hero);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    transition: opacity 0.2s ease-out;
+  }
+
+  .btn-back:hover {
+    opacity: 0.85;
+  }
+}

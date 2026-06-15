@@ -1,0 +1,7 @@
+/* ─── Corner radius primitives (Figma → corner radius) ─── */
+:root {
+  --radius-small: 0.75rem; /* 12px */
+  --radius-medium: 1rem; /* 16px */
+  --radius-large: 2.5rem; /* 40px */
+  --radius-xlarge: 5.5rem; /* 88px */
+}
