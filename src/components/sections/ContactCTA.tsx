@@ -41,37 +41,32 @@ export default function ContactCTA() {
     <section
       id="contact"
       ref={sectionRef}
-      className="bg-hero py-32 text-on-hero lg:py-48"
+      data-header-inverse
+      className="section-padding bg-hero text-on-hero"
       aria-labelledby="contact-heading"
     >
-      <div
-        ref={contentRef}
-        className="mx-auto flex max-w-4xl flex-col items-center px-6 text-center"
-      >
+      <div ref={contentRef} className="container-site-cta contact-cta-inner">
         <p className="type-cta-eyebrow">¿Hacemos algo juntos?</p>
 
-        <h2 id="contact-heading" className="type-cta-title mt-6 mb-12 max-w-3xl">
+        <h2 id="contact-heading" className="type-cta-title contact-cta-title">
           Lidero el diseño, estructuro sistemas y potencio tu producto digital.
         </h2>
 
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-6">
+        <div className="contact-cta-actions">
           <Magnetic>
             <a
               href="/cv.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="type-cta-link type-cta-button"
+              className="btn btn-secondary-lg"
             >
               Descargar CV
             </a>
           </Magnetic>
 
           <Magnetic>
-            <a
-              href="mailto:raulin534@gmail.com"
-              className="type-cta-link inline-block transition-colors duration-300 hover:text-primary"
-            >
-              Contáctarme
+            <a href="mailto:raulin534@gmail.com" className="btn btn-tertiary-lg">
+              Contáctame
             </a>
           </Magnetic>
         </div>

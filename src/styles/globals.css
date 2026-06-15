@@ -1,10 +1,22 @@
 @import "tailwindcss";
 @config "../../tailwind.config.ts";
 
+@import "./tokens/brand.css";
+@import "./tokens/alias.css";
+@import "./tokens/spec.css";
+@import "./tokens/spacing.css";
+@import "./tokens/radius.css";
+@import "./tokens/layout.css";
+@import "./tokens/typography-primitives.css";
 @import "./tokens/colors.css";
 @import "./tokens/typography.css";
 @import "./tokens/typography-utilities.css";
+@import "./tokens/layout-utilities.css";
+@import "./tokens/buttons.css";
+@import "./hero.css";
+@import "./home.css";
 @import "./case-study.css";
+@import "./page-transition.css";
 
 @theme inline {
   --font-sans: var(--font-red-hat-display);
@@ -39,6 +51,16 @@
   --color-on-primary-border: var(--on-primary-border);
   --color-preview-bg: var(--preview-bg);
   --color-avatar-border: var(--avatar-border);
+}
+
+html {
+  color-scheme: light;
+  overflow-x: clip;
+}
+
+html,
+body {
+  max-width: 100%;
 }
 
 body {
@@ -82,6 +104,11 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .header-shell {
+    transition-duration: 0.01ms;
+  }
+
+  .header-mobile-menu,
+  .header-menu-icon span {
     transition-duration: 0.01ms;
   }
 }

@@ -18,15 +18,15 @@ const footerLinkClassName =
 
 export default function Footer() {
   return (
-    <footer className="bg-inverse text-on-inverse">
-      <div className="mx-auto flex max-w-7xl flex-col items-center gap-10 px-6 py-14 sm:px-8 lg:px-20 lg:py-[4.5rem]">
-        <div className="flex w-full flex-col gap-8 border-b border-inverse-border pb-8 lg:flex-row lg:items-center lg:justify-between">
+    <footer className="bg-elevated text-on-inverse">
+      <div className="footer-inner mx-auto w-full max-w-[var(--container-max)]">
+        <div className="footer-top">
           <Link href="/" className="inline-flex shrink-0" aria-label="Raulyn Ladera — Inicio">
-            <RaulynLogotype className="h-10 w-auto sm:h-12" />
+            <RaulynLogotype className="footer-logo w-auto" />
           </Link>
 
           <nav aria-label="Footer navigation">
-            <ul className="flex flex-wrap items-center gap-x-8 gap-y-3 lg:gap-x-[4.5rem]">
+            <ul className="footer-nav-list">
               {footerNavLinks.map(({ label, href, ...rest }) => (
                 <li key={label}>
                   <Magnetic>

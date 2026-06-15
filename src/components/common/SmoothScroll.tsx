@@ -39,6 +39,28 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
       );
     });
 
+    ScrollTrigger.scrollerProxy(document.documentElement, {
+      scrollTop(value?: number) {
+        if (typeof value === "number") {
+          lenis.scrollTo(value, { immediate: true });
+        }
+        return lenis.scroll;
+      },
+      getBoundingClientRect() {
+        return {
+          top: 0,
+          left: 0,
+          width: window.innerWidth,
+          height: window.innerHeight,
+        };
+      },
+      pinType: document.documentElement.style.transform ? "transform" : "fixed",
+    });
+
+    const onRefresh = () => lenis.resize();
+    ScrollTrigger.addEventListener("refresh", onRefresh);
+    ScrollTrigger.refresh();
+
     let rafId = 0;
 
     const raf = (time: number) => {
@@ -50,6 +72,8 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
 
     return () => {
       cancelAnimationFrame(rafId);
+      ScrollTrigger.removeEventListener("refresh", onRefresh);
+      ScrollTrigger.scrollerProxy(document.documentElement, {});
       lenis.destroy();
     };
   }, []);

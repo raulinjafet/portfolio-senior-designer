@@ -1,0 +1,26 @@
+/* ─── Layer 1: Brand primitives (Figma → .color/brand) ─── */
+:root {
+  /* Green scale */
+  --color-green-0: #f4fdfb;
+  --color-green-100: #e8fbf7;
+  --color-green-200: #c7f4eb;
+  --color-green-300: #a5eddf;
+  --color-green-400: #61e0c8;
+  --color-green-500: #1dd3b0;
+  --color-green-600: #17a98d;
+  --color-green-700: #117f6a;
+  --color-green-800: #0c5446;
+  --color-green-900: #062a23;
+
+  /* Neutral scale */
+  --color-neutral-0: #ffffff;
+  --color-neutral-100: #f4f4f4;
+  --color-neutral-200: #e8e8e8;
+  --color-neutral-300: #a5a5a5;
+  --color-neutral-400: #767676;
+  --color-neutral-500: #595959;
+  --color-neutral-600: #1a1a1a;
+  --color-neutral-700: #151515;
+  --color-neutral-800: #101010;
+  --color-neutral-900: #0a0a0a;
+}

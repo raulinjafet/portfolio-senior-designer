@@ -1,29 +1,30 @@
-/* ─── Color tokens (light mode default) ─── */
+/* ─── Layer 3: Semantic color tokens (site) ─── */
+/* Values resolve via Figma brand → alias. Component/API names unchanged. */
 :root {
   /* Brand palette */
-  --background: #f4fdfb;
-  --foreground: #1a1a1a;
-  --primary: #1dd3b0;
-  --secondary: #117f6a;
-  --accent: #a5eddf;
+  --background: var(--color-green-0);
+  --foreground: var(--alias-text-default);
+  --primary: var(--alias-layer-05);
+  --secondary: var(--color-green-700);
+  --accent: var(--color-green-300);
 
   /* Surfaces */
-  --surface: #f1f1f1;
+  --surface: var(--alias-layer-03);
   --surface-subtle: color-mix(in srgb, var(--foreground) 5%, transparent);
-  --card: #ffffff;
-  --elevated: #232323;
+  --card: var(--alias-layer-01);
+  --elevated: var(--alias-layer-04);
 
   /* Inverse / dark bands */
-  --inverse: #141414;
-  --inverse-border: #1a1a1a;
-  --on-inverse: #ffffff;
+  --inverse: var(--color-neutral-800);
+  --inverse-border: var(--alias-border-03);
+  --on-inverse: var(--alias-text-inverse);
 
   /* Hero panels (case studies, CTA) */
-  --hero: #1a1a1a;
-  --on-hero: #f4fdfb;
+  --hero: var(--alias-layer-02);
+  --on-hero: var(--alias-text-inverse);
 
   /* Text hierarchy */
-  --muted: #646464;
+  --muted: var(--alias-text-accent-neutral);
   --foreground-subtle: color-mix(in srgb, var(--foreground) 60%, transparent);
   --foreground-faint: color-mix(in srgb, var(--foreground) 40%, transparent);
   --foreground-soft: color-mix(in srgb, var(--foreground) 80%, transparent);
@@ -33,7 +34,7 @@
   --primary-border: color-mix(in srgb, var(--primary) 80%, transparent);
 
   /* Text on primary surfaces (always dark — primary bg is bright teal) */
-  --on-primary: #1a1a1a;
+  --on-primary: var(--alias-text-default);
   --on-primary-subtle: color-mix(in srgb, var(--on-primary) 65%, transparent);
   --on-primary-border: color-mix(in srgb, var(--on-primary) 25%, transparent);
 
@@ -45,101 +46,22 @@
   --preview-bg: color-mix(in srgb, var(--foreground) 10%, transparent);
 
   /* Cursor */
-  --cursor-default: #1a1a1a;
+  --cursor-default: var(--alias-text-default);
   --cursor-hover: rgb(255 255 255 / 0.1);
-  --cursor-project: #ffffff;
+  --cursor-project: var(--color-neutral-0);
 
   /* Avatar */
-  --avatar-border: #ffffff;
+  --avatar-border: var(--color-neutral-0);
   --shadow-avatar: 0 1.5px 3px rgb(70 70 70 / 0.25);
 
-  /* Glass effect */
+  /* Glass effect (site-specific — derived from brand neutrals) */
   --glass-bg: rgb(244 244 244 / 0.42);
   --glass-border: rgb(255 255 255 / 0.28);
   --glass-shadow: 0 4px 24px rgb(26 26 26 / 0.06);
   --glass-inset: inset 0 1px 0 rgb(255 255 255 / 0.45);
-  --glass-fallback: rgb(244 253 251 / 0.92);
+  --glass-fallback: color-mix(in srgb, var(--color-green-0) 92%, transparent);
 
   /* Device mockup */
   --device-border: rgb(255 255 255 / 0.15);
   --device-shadow: 0 0 42px rgb(86 86 86 / 0.2);
-}
-
-/* ─── Dark mode ─── */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --background: #0f0f0f;
-    --foreground: #f4fdfb;
-    --primary: #1dd3b0;
-    --secondary: #3dd9bc;
-    --accent: #a5eddf;
-
-    --surface: #1a1a1a;
-    --surface-subtle: color-mix(in srgb, var(--foreground) 8%, transparent);
-    --card: #141414;
-    --elevated: #232323;
-
-    --inverse: #050505;
-    --inverse-border: #1a1a1a;
-    --on-inverse: #f4fdfb;
-
-    --hero: #232323;
-    --on-hero: #f4fdfb;
-
-    --muted: #9ca3af;
-
-    --cursor-default: #f4fdfb;
-    --cursor-hover: rgb(255 255 255 / 0.15);
-    --cursor-project: #ffffff;
-
-    --avatar-border: rgb(255 255 255 / 0.2);
-    --shadow-avatar: 0 1.5px 3px rgb(0 0 0 / 0.4);
-
-    --glass-bg: rgb(20 20 20 / 0.72);
-    --glass-border: rgb(255 255 255 / 0.08);
-    --glass-shadow: 0 4px 24px rgb(0 0 0 / 0.35);
-    --glass-inset: inset 0 1px 0 rgb(255 255 255 / 0.06);
-    --glass-fallback: rgb(15 15 15 / 0.95);
-
-    --device-border: rgb(255 255 255 / 0.1);
-    --device-shadow: 0 0 42px rgb(0 0 0 / 0.45);
-  }
-}
-
-[data-theme="dark"] {
-  --background: #0f0f0f;
-  --foreground: #f4fdfb;
-  --primary: #1dd3b0;
-  --secondary: #3dd9bc;
-  --accent: #a5eddf;
-
-  --surface: #1a1a1a;
-  --surface-subtle: color-mix(in srgb, var(--foreground) 8%, transparent);
-  --card: #141414;
-  --elevated: #232323;
-
-  --inverse: #050505;
-  --inverse-border: #1a1a1a;
-  --on-inverse: #f4fdfb;
-
-  --hero: #232323;
-  --on-hero: #f4fdfb;
-
-  --muted: #9ca3af;
-
-  --cursor-default: #f4fdfb;
-  --cursor-hover: rgb(255 255 255 / 0.15);
-  --cursor-project: #ffffff;
-
-  --avatar-border: rgb(255 255 255 / 0.2);
-  --shadow-avatar: 0 1.5px 3px rgb(0 0 0 / 0.4);
-
-  --glass-bg: rgb(20 20 20 / 0.72);
-  --glass-border: rgb(255 255 255 / 0.08);
-  --glass-shadow: 0 4px 24px rgb(0 0 0 / 0.35);
-  --glass-inset: inset 0 1px 0 rgb(255 255 255 / 0.06);
-  --glass-fallback: rgb(15 15 15 / 0.95);
-
-  --device-border: rgb(255 255 255 / 0.1);
-  --device-shadow: 0 0 42px rgb(0 0 0 / 0.45);
 }

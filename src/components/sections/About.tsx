@@ -3,24 +3,24 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 import { useRef } from "react";
-import Magnetic from "@/components/motion/Magnetic";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const aboutTitleLines = [
-  "Mi enfoque constante:",
-  "perfeccionar, estructurar",
-  "y liderar el diseño del mañana.",
+  { text: "Mi enfoque constante:", accent: true },
+  { text: "perfeccionar, estructurar", accent: false },
+  { text: "y liderar el diseño del mañana.", accent: false },
 ] as const;
 
 const skills = [
+  "Product Design",
+  "Adobe siute",
+  "Design System",
+  "Visual Design",
+  "Leadership",
   "Figma",
-  "Webflow",
-  "Zeplin",
-  "Adobe",
-  "Photoshop",
-  "Illustrator",
 ] as const;
 
 export default function About() {
@@ -33,11 +33,22 @@ export default function About() {
 
       const lines = gsap.utils.toArray<HTMLElement>(".about-line");
       const tags = gsap.utils.toArray<HTMLElement>(".about-tag");
+      const media = gsap.utils.toArray<HTMLElement>(".about-media");
 
-      if (!lines.length || !tags.length) return;
+      if (!lines.length) return;
+
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      if (prefersReducedMotion) {
+        gsap.set([...lines, ...tags, ...media], { opacity: 1, y: 0, scale: 1 });
+        return;
+      }
 
       gsap.set(lines, { y: "100%" });
       gsap.set(tags, { opacity: 0, y: 10 });
+      gsap.set(media, { opacity: 0, scale: 0.96, y: 24 });
 
       const timeline = gsap.timeline({
         scrollTrigger: {
@@ -55,15 +66,28 @@ export default function About() {
       });
 
       timeline.to(
+        media,
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.9,
+          stagger: 0.12,
+          ease: "power3.out",
+        },
+        "-=0.85",
+      );
+
+      timeline.to(
         tags,
         {
           opacity: 1,
           y: 0,
           duration: 0.6,
-          stagger: 0.03,
+          stagger: 0.04,
           ease: "power2.out",
         },
-        "-=0.5",
+        "-=0.55",
       );
     },
     { scope: sectionRef },
@@ -73,68 +97,67 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="py-24 lg:py-32"
+      className="section-padding"
       aria-labelledby="about-heading"
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:items-stretch lg:gap-x-8 lg:gap-y-0 xl:gap-x-12">
-          <div className="order-1 lg:col-span-3 lg:row-start-1">
-            <p className="type-eyebrow">Sobre mí</p>
+      <div className="container-site">
+        <div className="about-grid">
+          <div className="about-left">
+            <div className="about-copy">
+              <p className="type-eyebrow">Sobre mí</p>
 
-            <h2 id="about-heading" className="type-section-title mt-6 max-w-sm">
-              {aboutTitleLines.map((line) => (
-                <span key={line} className="block overflow-hidden">
-                  <span className="about-line block">{line}</span>
-                </span>
-              ))}
-            </h2>
-          </div>
-
-          <div className="order-2 lg:col-span-5 lg:col-start-4 lg:row-span-2 lg:row-start-1">
-            <div
-              aria-label="Retrato del diseñador"
-              className="aspect-[4/5] w-full rounded-lg bg-surface-subtle lg:aspect-auto lg:h-full lg:min-h-[640px]"
-              role="img"
-            />
-          </div>
-
-          <div className="order-3 flex flex-col justify-between gap-10 lg:col-span-4 lg:col-start-9 lg:row-span-2 lg:row-start-1 lg:min-h-[640px]">
-            <div
-              aria-hidden="true"
-              className="aspect-[16/10] w-full shrink-0 rounded-lg bg-surface-subtle sm:aspect-[5/3]"
-            />
-
-            <div className="flex flex-col gap-8 lg:mt-auto">
-              <p className="type-body max-w-md">
-                A lo largo de mi carrera, he consolidado mi experiencia liderando
-                equipos de producto y escalando sistemas de diseño eficaces.
-                Abordo cada proyecto conectando las necesidades reales de los
-                usuarios con los objetivos estratégicos del negocio,
-                transformando la complejidad en interfaces intuitivas y
-                memorables.
-              </p>
-
-              <Magnetic>
-                <a
-                  href="#about"
-                  className="type-link inline-block transition-colors duration-300 ease-out hover:text-primary"
-                >
-                  Conoce más sobre mi enfoque ↗
-                </a>
-              </Magnetic>
+              <h2 id="about-heading" className="type-about-title mt-6">
+                {aboutTitleLines.map(({ text, accent }) => (
+                  <span key={text} className="about-line-wrap">
+                    <span
+                      className={`about-line block ${
+                        accent ? "about-title-accent" : "about-title-default"
+                      }`}
+                    >
+                      {text}
+                    </span>
+                  </span>
+                ))}
+              </h2>
             </div>
-          </div>
 
-          <div className="order-4 lg:col-span-3 lg:row-start-2 lg:self-end">
-            <ul className="flex flex-wrap gap-2.5 sm:gap-3">
+            <ul className="about-tags about-tags-list">
               {skills.map((skill) => (
                 <li key={skill}>
-                  <span className="about-tag type-tag inline-block rounded-full border px-4 py-2">
-                    {skill}
-                  </span>
+                  <span className="about-tag">{skill}</span>
                 </li>
               ))}
             </ul>
+          </div>
+
+          <div className="about-portrait-wrap about-media">
+            <Image
+              src="/home/about-portrait.jpg"
+              alt="Raulyn Ladera trabajando en un espacio al aire libre"
+              fill
+              className="about-portrait-img"
+              sizes="(max-width: 1024px) 100vw, 480px"
+            />
+          </div>
+
+          <div className="about-side">
+            <div className="about-team-wrap about-media">
+              <Image
+                src="/home/about-team.jpg"
+                alt="Equipo de diseño en Qik"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 373px"
+              />
+            </div>
+
+            <p className="about-bio about-media">
+              A lo largo de mi carrera, he consolidado mi experiencia liderando
+              equipos de producto y escalando sistemas de diseño eficaces. Abordo
+              cada proyecto conectando las necesidades reales de los usuarios con
+              los objetivos estratégicos del negocio, transformando la complejidad
+              en interfaces intuitivas y memorables.
+            </p>
           </div>
         </div>
       </div>

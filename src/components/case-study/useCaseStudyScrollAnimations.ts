@@ -17,46 +17,23 @@ export function useCaseStudyScrollAnimations(
       const root = pageRef.current;
       if (!root) return;
 
-      const heroItems = gsap.utils.toArray<HTMLElement>(".cs-hero-item");
-      const heroMedia = gsap.utils.toArray<HTMLElement>(".cs-hero-media");
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
 
-      if (heroItems.length) {
-        gsap.set(heroItems, { opacity: 0, y: 24 });
-        gsap.to(heroItems, {
-          opacity: 1,
-          y: 0,
-          duration: 0.95,
-          stagger: 0.09,
-          ease: "power3.out",
-          delay: 0.12,
+      const sections = gsap.utils.toArray<HTMLElement>(".cs-section", root);
+
+      if (prefersReducedMotion) {
+        sections.forEach((section) => {
+          gsap.set(section.querySelectorAll(".cs-animate-badge, .cs-animate-title, .cs-animate-text, .cs-animate-media, .cs-animate-stagger-item"), {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+          });
+          gsap.set(section.querySelectorAll(".cs-animate-line"), { y: "0%" });
         });
+        return;
       }
-
-      const heroLines = gsap.utils.toArray<HTMLElement>(".cs-hero-line");
-      if (heroLines.length) {
-        gsap.set(heroLines, { y: "100%" });
-        gsap.to(heroLines, {
-          y: "0%",
-          duration: 1,
-          ease: "power4.out",
-          delay: 0.22,
-        });
-      }
-
-      if (heroMedia.length) {
-        gsap.set(heroMedia, { opacity: 0, scale: 0.94, y: 32 });
-        gsap.to(heroMedia, {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          duration: 1.05,
-          stagger: 0.1,
-          ease: "power3.out",
-          delay: 0.28,
-        });
-      }
-
-      const sections = gsap.utils.toArray<HTMLElement>(".cs-section");
 
       sections.forEach((section) => {
         const timeline = gsap.timeline({
@@ -161,6 +138,15 @@ export function useCaseStudyScrollAnimations(
           );
         }
       });
+
+      const refresh = () => ScrollTrigger.refresh();
+      refresh();
+      window.addEventListener("load", refresh, { once: true });
+      window.addEventListener("resize", refresh);
+
+      return () => {
+        window.removeEventListener("resize", refresh);
+      };
     },
     { scope: pageRef },
   );

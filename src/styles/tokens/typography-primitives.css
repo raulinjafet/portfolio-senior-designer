@@ -1,0 +1,34 @@
+/* ─── Layer 1: Typography primitives (Figma → .typography) ─── */
+:root {
+  --font-family-heading: "Red Hat Display", sans-serif;
+  --font-family-body: "Red Hat Display", sans-serif;
+  --font-family-button: "Red Hat Display", sans-serif;
+  --font-family-caption: "Red Hat Display", sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* Figma font/size/* (px → rem, base 16) */
+  --font-size-xs: 0.875rem; /* 14px */
+  --font-size-sm: 1.125rem; /* 18px */
+  --font-size-md: 1.25rem; /* 20px */
+  --font-size-lg: 1.5rem; /* 24px */
+  --font-size-xl: 2rem; /* 32px */
+  --font-size-2xl: 3rem; /* 48px */
+  --font-size-3xl: 4rem; /* 64px */
+  --font-size-4xl: 4.5rem; /* 72px */
+
+  /* Figma text style line-heights */
+  --leading-heading: 1.15;
+  --leading-body-figma: 1.5;
+  --leading-caption: 1.142857; /* 16px / 14px */
+
+  /* Figma text style letter-spacing */
+  --tracking-heading-2xl: -0.125rem; /* -2px @ 72px */
+  --tracking-heading-xl: -0.125rem; /* -2px @ 64px */
+  --tracking-heading-lg: -0.0625rem; /* -1px @ 48px */
+  --tracking-heading-md: -0.03125rem; /* -0.5px @ 32px */
+  --tracking-heading-sm: -0.03125rem; /* -0.5px @ 24px */
+  --tracking-caption: 0.04375rem; /* 0.7px @ 14px */
+}

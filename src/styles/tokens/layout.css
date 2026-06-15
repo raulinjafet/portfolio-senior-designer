@@ -1,0 +1,78 @@
+/* ─── Layer 3: Semantic layout tokens (site) ─── */
+/* Mapped to Figma spacing + container specs */
+:root {
+  /* Containers */
+  --container-max: 80rem; /* 1280px */
+  --container-max-narrow: 48rem; /* 768px */
+  --container-max-wide: 90rem; /* 1440px */
+
+  --container-padding-x: var(--spacing-small); /* 32px */
+  --container-padding-x-mobile: var(--spacing-x-small); /* 24px — Figma header/mobile px */
+  --container-padding-x-compact: var(--spacing-2x-small); /* 16px */
+
+  /* Section vertical rhythm — mobile-first, scales up at sm+ */
+  --section-padding-y: var(--spacing-large); /* 88px */
+  --section-padding-case-y: var(--spacing-large); /* 88px */
+  --section-padding-case-y-lg: var(--spacing-3x-large); /* 152px */
+
+  /* Header — Figma header/mobile: 56px, py 12px, avatar 44px */
+  --header-height: 3.5rem; /* 56px */
+  --header-padding-y: 0.75rem; /* 12px */
+  --header-avatar-size: 2.75rem; /* 44px */
+  --header-brand-gap: var(--spacing-2x-small); /* 16px */
+  --header-avatar-border-width: 2px;
+
+  /* Navigation gaps */
+  --gap-nav: var(--spacing-small); /* 32px */
+  --gap-nav-compact: var(--spacing-2x-small); /* 16px */
+  --gap-stack-md: var(--spacing-x-small); /* 24px */
+  --gap-stack-lg: var(--spacing-small); /* 32px */
+
+  /* Project preview card */
+  --preview-width: 20rem; /* 320px */
+  --preview-height: 25rem; /* 400px */
+  --preview-offset-x: var(--spacing-small);
+  --preview-offset-y: calc(var(--spacing-2x-small) * -3); /* -48px */
+
+  /* Footer */
+  --footer-padding-y: 4.5rem;
+  --footer-nav-gap: 4.5rem;
+
+  /* About grid */
+  --about-min-height: 40rem; /* 640px */
+
+  /* Header theme (overridden by [data-header-theme="inverse"]) */
+  --header-fg: var(--foreground);
+  --header-fg-subtle: var(--foreground-subtle);
+  --header-nav-hover: var(--primary);
+  --header-avatar-border: var(--avatar-border);
+  --header-btn-text: var(--foreground);
+  --header-btn-border: var(--spec-btn-secondary-border-enabled);
+  --header-btn-text-hover: var(--spec-btn-secondary-text-hover);
+  --header-btn-bg-hover: var(--spec-btn-secondary-bg-hover);
+}
+
+[data-header-theme="inverse"] {
+  --header-fg: var(--on-hero);
+  --header-fg-subtle: var(--on-hero-subtle);
+  --header-nav-hover: var(--primary);
+  --header-avatar-border: rgb(255 255 255 / 0.2);
+  --header-btn-text: var(--on-hero);
+  --header-btn-border: var(--color-neutral-500);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-height: 4.5rem; /* 72px — Figma header/desktop */
+    --header-padding-y: var(--spacing-3x-small); /* 8px */
+  }
+}
+
+@media (min-width: 640px) {
+  :root {
+    --container-padding-x-compact: var(--spacing-x-small); /* 24px */
+    --section-padding-y: var(--spacing-2x-large); /* 128px */
+    --section-padding-case-y: var(--spacing-2x-large); /* 128px */
+    --gap-nav-compact: var(--spacing-x-small); /* 24px */
+  }
+}

@@ -1,0 +1,143 @@
+/* ─── Home hero band (Figma layer-02 + dot grid) ─── */
+:root {
+  --hero-bottom-gap: 3rem; /* 48px — Figma pt between title and stats row */
+  --hero-dot-opacity: 0.2;
+  --hero-dot-size: 745px 550px;
+}
+
+@layer components {
+  .hero-band {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: var(--hero);
+    color: var(--on-hero);
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding-block: var(--header-height) var(--spacing-x-small);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    will-change: transform, opacity;
+  }
+
+  .hero-band-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: var(--hero-dot-opacity);
+    will-change: transform;
+    transform-origin: center top;
+    background-image: radial-gradient(
+      circle at center,
+      color-mix(in srgb, var(--on-hero) 22%, transparent) 1px,
+      transparent 1px
+    );
+    background-size: 18px 18px;
+    background-position: top left;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-band-grid {
+      background-size: 20px 20px;
+      mask-image: radial-gradient(ellipse 745px 550px at 0% 0%, black 30%, transparent 75%);
+    }
+  }
+
+  .hero-band .type-eyebrow {
+    color: var(--alias-text-accent-neutral-inverse);
+  }
+
+  .hero-band .type-hero-title {
+    color: var(--on-hero);
+  }
+
+  .hero-band .type-hero-metric {
+    color: var(--primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hero-band .type-body {
+    color: var(--on-hero);
+  }
+
+  .hero-band .hero-metric-label {
+    color: var(--on-hero);
+  }
+
+  .hero-title-block {
+    max-width: 64rem;
+    padding-top: var(--spacing-x-small);
+  }
+
+  .hero-title-unified {
+    display: block;
+    text-wrap: pretty;
+  }
+
+  .hero-title-split {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-title-unified {
+      display: none;
+    }
+
+    .hero-title-split {
+      display: block;
+    }
+  }
+
+  .hero-body-copy {
+    max-width: 36rem;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-body-copy {
+      max-width: none;
+      justify-self: end;
+    }
+  }
+
+  .hero-bottom {
+    display: grid;
+    gap: var(--spacing-x-small);
+    padding-top: var(--hero-bottom-gap);
+  }
+
+  @media (min-width: 1024px) {
+    .hero-bottom {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: end;
+      gap: var(--spacing-large);
+    }
+  }
+
+  .hero-metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-x-small) var(--spacing-medium);
+  }
+
+  .hero-metric-item {
+    min-width: 0;
+    flex: 1 1 7.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .hero-metric-item {
+      min-width: 10.5rem;
+      flex: 0 1 auto;
+    }
+  }
+
+  .hero-metric-label {
+    margin-top: var(--spacing-3x-small);
+  }
+}

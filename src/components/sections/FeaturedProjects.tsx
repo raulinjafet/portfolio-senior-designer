@@ -2,6 +2,7 @@
 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState, type MouseEvent } from "react";
@@ -9,10 +10,18 @@ import { useCursor } from "@/context/CursorContext";
 import { projects, type Project } from "@/data/projects";
 import { getColorToken } from "@/lib/tokens";
 
-const PREVIEW_OFFSET_X = 32;
-const PREVIEW_OFFSET_Y = -48;
+gsap.registerPlugin(ScrollTrigger);
 
 type QuickToFn = (value: number) => void;
+
+function getPreviewOffset() {
+  if (typeof document === "undefined") return { x: 32, y: -48 };
+  const root = getComputedStyle(document.documentElement);
+  return {
+    x: parseFloat(root.getPropertyValue("--preview-offset-x")) || 32,
+    y: parseFloat(root.getPropertyValue("--preview-offset-y")) || -48,
+  };
+}
 
 export default function FeaturedProjects() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -25,38 +34,99 @@ export default function FeaturedProjects() {
   useGSAP(
     () => {
       const preview = previewRef.current;
-      if (!preview) return;
+      const section = sectionRef.current;
 
-      gsap.set(preview, {
-        xPercent: -50,
-        yPercent: -50,
-        opacity: 0,
-        scale: 0.75,
-        force3D: true,
-      });
+      if (preview) {
+        gsap.set(preview, {
+          xPercent: -50,
+          yPercent: -50,
+          opacity: 0,
+          scale: 0.75,
+          force3D: true,
+        });
 
-      previewXToRef.current = gsap.quickTo(preview, "x", {
-        duration: 0.85,
-        ease: "power3.out",
-      });
+        previewXToRef.current = gsap.quickTo(preview, "x", {
+          duration: 0.85,
+          ease: "power3.out",
+        });
 
-      previewYToRef.current = gsap.quickTo(preview, "y", {
-        duration: 0.85,
-        ease: "power3.out",
-      });
+        previewYToRef.current = gsap.quickTo(preview, "y", {
+          duration: 0.85,
+          ease: "power3.out",
+        });
+      }
+
+      if (section) {
+        const intro = section.querySelector<HTMLElement>(".projects-intro");
+        const rows = gsap.utils.toArray<HTMLElement>(".project-row");
+
+        if (intro && rows.length) {
+          const prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+          ).matches;
+
+          if (!prefersReducedMotion) {
+            const headingLines = gsap.utils.toArray<HTMLElement>(".projects-heading-line");
+            gsap.set(intro, { opacity: 0, y: 20 });
+            gsap.set(rows, { opacity: 0, y: 24 });
+            if (headingLines.length) gsap.set(headingLines, { y: "100%" });
+
+            const timeline = gsap.timeline({
+              scrollTrigger: {
+                trigger: section,
+                start: "top 75%",
+                once: true,
+              },
+            });
+
+            timeline.to(intro, {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "power3.out",
+            });
+
+            if (headingLines.length) {
+              timeline.to(
+                headingLines,
+                {
+                  y: "0%",
+                  duration: 0.9,
+                  stagger: 0.06,
+                  ease: "power4.out",
+                },
+                "-=0.55",
+              );
+            }
+
+            timeline.to(
+              rows,
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.7,
+                stagger: 0.1,
+                ease: "power2.out",
+              },
+              "-=0.45",
+            );
+          }
+        }
+      }
 
       return () => {
         previewXToRef.current = null;
         previewYToRef.current = null;
-        gsap.killTweensOf(preview);
+        if (preview) gsap.killTweensOf(preview);
       };
     },
-    { scope: previewRef },
+    { scope: sectionRef },
   );
 
   const movePreview = (event: MouseEvent<HTMLElement>) => {
-    previewXToRef.current?.(event.clientX + PREVIEW_OFFSET_X);
-    previewYToRef.current?.(event.clientY + PREVIEW_OFFSET_Y);
+    const { x, y } = getPreviewOffset();
+    previewXToRef.current?.(event.clientX + x);
+    previewYToRef.current?.(event.clientY + y);
   };
 
   const handleRowEnter = (project: Project, event: MouseEvent<HTMLElement>) => {
@@ -126,33 +196,38 @@ export default function FeaturedProjects() {
     <section
       id="work"
       ref={sectionRef}
-      className="relative py-24 lg:py-32"
+      className="section-padding relative"
       aria-labelledby="work-heading"
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mb-12 lg:mb-16">
+      <div className="container-site">
+        <div className="projects-intro projects-heading-block">
           <p className="type-eyebrow">Proyectos</p>
-          <h2
-            id="work-heading"
-            className="type-section-title mt-6 max-w-2xl"
-          >
-            Cada proyecto es una decisión.
-            <br />
-            No solo una interfaz.
+          <h2 id="work-heading" className="type-projects-heading mt-6">
+            <span className="block overflow-hidden">
+              <span className="projects-heading-line block will-change-transform">
+                <span className="projects-heading-muted">Cada proyecto es</span>
+                {" una decisión."}
+              </span>
+            </span>
+            <span className="block overflow-hidden">
+              <span className="projects-heading-line block will-change-transform">
+                No solo una interfaz.
+              </span>
+            </span>
           </h2>
         </div>
 
-        <div className="featured-projects-container border-t border-foreground-divider">
+        <div className="projects-list">
           {projects.map((project) => (
             <article
               key={project.id}
-              className="project-row group relative cursor-none border-b border-foreground-divider py-12 lg:py-16"
+              className="project-row group relative pointer-fine:cursor-none"
               onMouseEnter={(event) => handleRowEnter(project, event)}
               onMouseMove={handleRowMove}
               onMouseLeave={handleRowLeave}
             >
-              <div className="grid grid-cols-1 items-start gap-4 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:gap-8 lg:gap-12">
-                <span className="type-project-index">{project.id}</span>
+              <div className="project-row-inner">
+                <span className="type-eyebrow">{project.id}</span>
 
                 <h3 className="type-project-title max-w-3xl will-change-transform">
                   <Link
@@ -163,11 +238,9 @@ export default function FeaturedProjects() {
                   </Link>
                 </h3>
 
-                <div className="sm:text-right">
-                  <p className="type-project-meta">{project.category}</p>
-                  <p className="type-eyebrow mt-1 text-foreground-faint">
-                    {project.year}
-                  </p>
+                <div className="project-row-meta">
+                  <p className="project-row-category">{project.category}</p>
+                  <p className="project-row-year">{project.year}</p>
                 </div>
               </div>
             </article>
@@ -178,7 +251,7 @@ export default function FeaturedProjects() {
       <div
         ref={previewRef}
         aria-hidden="true"
-        className="pointer-events-none fixed top-0 left-0 z-40 hidden h-[400px] w-[320px] overflow-hidden rounded-[40px] bg-preview-bg opacity-0 shadow-2xl pointer-fine:block"
+        className="project-preview pointer-events-none fixed top-0 left-0 z-40 hidden overflow-hidden bg-preview-bg opacity-0 shadow-2xl pointer-fine:block"
       >
         {projects.map((project) => (
           <div

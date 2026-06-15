@@ -1,0 +1,21 @@
+/* ─── Layer 2b: Component spec tokens (Figma → color/spec) ─── */
+:root {
+  /* Primary button */
+  --spec-btn-primary-bg-enabled: var(--color-green-500);
+  --spec-btn-primary-bg-hover: var(--color-neutral-600);
+  --spec-btn-primary-border: var(--color-green-300);
+  --spec-btn-primary-text-enabled: var(--color-neutral-600);
+  --spec-btn-primary-text-hover: var(--color-green-0);
+
+  /* Secondary button */
+  --spec-btn-secondary-border-enabled: var(--color-neutral-500);
+  --spec-btn-secondary-text-enabled: var(--color-green-0);
+  --spec-btn-secondary-text-hover: var(--color-neutral-600);
+  --spec-btn-secondary-bg-hover: var(--color-green-500);
+
+  /* Tertiary button */
+  --spec-btn-tertiary-bg-enabled: var(--color-neutral-600);
+  --spec-btn-tertiary-text-enabled: var(--color-green-0);
+  --spec-btn-tertiary-text-hover: var(--color-neutral-600);
+  --spec-btn-tertiary-bg-hover: var(--color-green-500);
+}

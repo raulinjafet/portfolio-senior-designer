@@ -3,6 +3,7 @@ import { Red_Hat_Display } from "next/font/google";
 import CursorShell from "@/components/common/CursorShell";
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
+import PageTransition from "@/components/motion/PageTransition";
 import SmoothScroll from "@/components/common/SmoothScroll";
 import "@/styles/globals.css";
 
@@ -23,10 +24,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${redHatDisplay.variable} h-full`}>
+    <html lang="es" className={`${redHatDisplay.variable} h-full`} data-theme="light">
       <body
         className={`${redHatDisplay.className} flex min-h-screen flex-col bg-background text-foreground antialiased`}
       >
+        <div
+          id="page-transition"
+          className="page-transition"
+          aria-hidden="true"
+          data-layer="color-layer-02"
+        />
+        <PageTransition />
         <SmoothScroll>
           <CursorShell>
             <Header />

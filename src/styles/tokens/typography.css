@@ -1,86 +1,102 @@
-/* ─── Typography scale tokens ─── */
+/* ─── Layer 3: Semantic typography tokens (site) ─── */
+/* Mapped to Figma text styles via typography-primitives.css */
 :root {
-  /* Eyebrow / labels */
-  --font-eyebrow: 0.75rem;
-  --font-eyebrow-sm: 0.875rem;
+  /* caption/caption_default */
+  --font-eyebrow: 0.75rem; /* mobile compact */
+  --font-eyebrow-sm: var(--font-size-xs);
   --leading-eyebrow: 1rem;
-  --tracking-eyebrow: 0.05em;
+  --tracking-eyebrow: var(--tracking-caption);
 
-  /* Navigation */
-  --font-nav: 0.875rem;
+  /* button/button_small, button/button_medium */
+  --font-nav: var(--font-size-xs);
   --font-nav-label: 0.75rem;
-  --font-nav-label-sm: 0.875rem;
+  --font-nav-label-sm: var(--font-size-xs);
 
-  /* Body */
-  --font-body: 1.125rem;
-  --font-body-lg: 1.25rem;
-  --leading-body: 1.625;
-  --leading-body-relaxed: 1.75;
+  /* body/body_medium, body/body_large */
+  --font-body: var(--font-size-sm);
+  --font-body-lg: var(--font-size-md);
+  --leading-body: var(--leading-body-figma);
+  --leading-body-relaxed: var(--leading-body-figma);
 
-  /* Links / buttons */
-  --font-link: 1rem;
-  --font-link-lg: 1.125rem;
+  /* button/button_medium */
+  --font-link: var(--font-size-sm);
+  --font-link-lg: var(--font-size-sm);
 
-  /* Section titles (H2) */
-  --font-section: 1.875rem;
-  --font-section-md: 2.25rem;
-  --font-section-lg: 2.75rem;
-  --leading-section: 1.15;
+  /* heading/heading-small → heading/heading-large */
+  --font-section: var(--font-size-lg);
+  --font-section-md: var(--font-size-xl);
+  --font-section-lg: var(--font-size-2xl);
+  --leading-section: var(--leading-heading);
+  --tracking-section: var(--tracking-heading-lg);
 
-  /* Project titles (H3) */
-  --font-project: 1.25rem;
-  --font-project-md: 1.5rem;
-  --font-project-lg: 1.875rem;
+  /* heading/heading-small → heading/heading-medium */
+  --font-project: var(--font-size-md);
+  --font-project-md: var(--font-size-lg);
+  --font-project-lg: var(--font-size-xl);
+  --tracking-project: var(--tracking-heading-sm);
 
-  /* Hero display (H1) */
-  --font-hero: 2.25rem;
-  --font-hero-md: 3.75rem;
-  --font-hero-lg: 4.5rem;
-  --leading-hero: 1.1;
+  /* heading/heading-medium → heading/heading-2x_large */
+  --font-hero: var(--font-size-xl);
+  --font-hero-md: var(--font-size-3xl);
+  --font-hero-lg: var(--font-size-4xl);
+  --leading-hero: var(--leading-heading);
+  --tracking-hero-md: var(--tracking-heading-xl);
+  --tracking-hero-lg: var(--tracking-heading-2xl);
 
-  /* Hero metrics */
-  --font-metric: 2.25rem;
-  --font-metric-lg: 3rem;
+  /* heading/heading-medium → heading/heading-large */
+  --font-metric: var(--font-size-xl);
+  --font-metric-lg: var(--font-size-2xl);
 
-  /* CTA section */
-  --font-cta: 1.875rem;
-  --font-cta-md: 3rem;
-  --font-cta-lg: 3.75rem;
+  /* heading/heading-medium → heading/heading-x_large */
+  --font-cta: var(--font-size-xl);
+  --font-cta-md: var(--font-size-2xl);
+  --font-cta-lg: var(--font-size-3xl);
+  --tracking-cta-md: var(--tracking-heading-lg);
+  --tracking-cta-lg: var(--tracking-heading-xl);
 
-  /* Footer */
-  --font-footer: 1.125rem;
+  /* body/body_medium */
+  --font-footer: var(--font-size-sm);
 
-  /* Cursor label */
+  /* Site-specific (no Figma style) */
   --font-cursor: 0.6875rem;
   --tracking-cursor: 0.18em;
 
-  /* Case study */
-  --font-case-hero: 2.25rem;
-  --font-case-hero-md: 3rem;
-  --font-case-hero-lg: 3.5rem;
-  --leading-case-hero-lg: 4.125rem;
+  /* Case study — mapped to Figma heading/body text styles */
+  /* heading/heading-medium (32px) — split titles, impact heading, aprendizaje, next case */
+  --font-case-section: var(--font-size-xl);
+  --font-case-section-md: var(--font-size-xl);
+  --leading-case-section: var(--leading-heading);
 
-  --font-case-section: 1.5rem;
-  --font-case-section-md: 2rem;
-  --leading-case-section: 2.5rem;
+  /* heading/heading-small (24px) — lead statements */
+  --font-case-lead: var(--font-size-lg);
+  --font-case-lead-md: var(--font-size-lg);
+  --leading-case-lead: var(--leading-heading);
 
-  --font-case-lead: 1.25rem;
-  --font-case-lead-md: 1.5rem;
-  --leading-case-lead: 2.25rem;
+  /* body/body_medium (18px) */
+  --font-case-body: var(--font-size-sm);
+  --leading-case-body: var(--leading-body-figma);
 
-  --font-case-body: 1.125rem;
-  --leading-case-body: 1.5rem;
-  --leading-case-body-loose: 2rem;
+  /* body/body_large (20px) — hero lead loose, impact row copy */
+  --leading-case-body-loose: var(--leading-body-figma);
+  --font-case-impact-text: var(--font-size-md);
 
-  --font-case-result: 1.875rem;
-  --font-case-result-md: 2.5rem;
-  --leading-case-result: 3rem;
+  /* heading/heading-medium (32px) — aprendizaje title */
+  --font-case-result: var(--font-size-xl);
+  --font-case-result-md: var(--font-size-xl);
+  --leading-case-result: var(--leading-heading);
 
-  --font-case-impact: 1.5rem;
-  --font-case-impact-md: 2rem;
+  /* heading/heading-medium (32px) — impact numbers */
+  --font-case-impact: var(--font-size-xl);
+  --font-case-impact-md: var(--font-size-xl);
 
-  /* Project list meta */
-  --font-project-index: 0.875rem;
-  --font-project-meta: 0.875rem;
-  --font-project-meta-lg: 1rem;
+  /* Legacy hero scale (old cs-hero-panel) */
+  --font-case-hero: var(--font-size-xl);
+  --font-case-hero-md: var(--font-size-2xl);
+  --font-case-hero-lg: var(--font-size-3xl);
+  --leading-case-hero-lg: calc(var(--font-size-3xl) * var(--leading-heading));
+
+  /* button/button_small, body/body_small */
+  --font-project-index: var(--font-size-xs);
+  --font-project-meta: var(--font-size-xs);
+  --font-project-meta-lg: var(--font-size-xs);
 }

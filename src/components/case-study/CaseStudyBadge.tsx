@@ -6,8 +6,8 @@ type CaseStudyBadgeProps = {
 };
 
 const variantClassName = {
-  light: "border-primary-border text-foreground-subtle",
-  "on-primary": "border-on-primary bg-transparent text-on-primary",
+  light: "cs-badge cs-badge--light",
+  "on-primary": "cs-badge cs-badge--on-primary",
 } as const;
 
 export default function CaseStudyBadge({
