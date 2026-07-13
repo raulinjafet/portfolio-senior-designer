@@ -9,9 +9,12 @@ import Magnetic from "@/components/motion/Magnetic";
 type CaseStudyHeroProps = {
   badge: ReactNode;
   title: string;
-  lead: string;
+  lead?: string;
   backHref?: string;
   backLabel?: string;
+  align?: "left" | "center";
+  showBack?: boolean;
+  showLead?: boolean;
 };
 
 export default function CaseStudyHero({
@@ -20,6 +23,9 @@ export default function CaseStudyHero({
   lead,
   backHref = "/#work",
   backLabel = "Volver al inicio",
+  align = "left",
+  showBack = true,
+  showLead = true,
 }: CaseStudyHeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -71,21 +77,27 @@ export default function CaseStudyHero({
   return (
     <section
       ref={sectionRef}
-      className="cs-case-hero hero-band"
+      className={`cs-case-hero hero-band${align === "center" ? " cs-case-hero--centered" : ""}`}
       data-header-inverse
       aria-labelledby="case-hero-title"
     >
       <div className="hero-band-grid" aria-hidden="true" />
 
-      <div className="hero-inner container-site cs-case-hero-inner">
-        <div className="cs-case-hero-item cs-case-hero-back-wrap">
-          <Magnetic>
-            <Link href={backHref} className="btn-back">
-              <span aria-hidden="true">←</span>
-              {backLabel}
-            </Link>
-          </Magnetic>
-        </div>
+      <div
+        className={`hero-inner container-site cs-case-hero-inner${
+          align === "center" ? " cs-case-hero-inner--centered" : ""
+        }`}
+      >
+        {showBack ? (
+          <div className="cs-case-hero-item cs-case-hero-back-wrap">
+            <Magnetic>
+              <Link href={backHref} className="btn-back">
+                <span aria-hidden="true">←</span>
+                {backLabel}
+              </Link>
+            </Magnetic>
+          </div>
+        ) : null}
 
         <p className="cs-case-hero-item type-eyebrow">{badge}</p>
 
@@ -95,7 +107,9 @@ export default function CaseStudyHero({
           </span>
         </h1>
 
-        <p className="cs-case-hero-item type-body cs-case-hero-lead">{lead}</p>
+        {showLead && lead ? (
+          <p className="cs-case-hero-item type-body cs-case-hero-lead">{lead}</p>
+        ) : null}
       </div>
     </section>
   );

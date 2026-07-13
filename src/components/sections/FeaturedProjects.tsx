@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState, type MouseEvent } from "react";
+import { useRef, useState, useEffect, type MouseEvent } from "react";
 import { useCursor } from "@/context/CursorContext";
 import { projects, type Project } from "@/data/projects";
 import { getColorToken } from "@/lib/tokens";
@@ -30,6 +30,13 @@ export default function FeaturedProjects() {
   const previewYToRef = useRef<QuickToFn | null>(null);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   const { setHoveringProject, setHoveringLink } = useCursor();
+
+  useEffect(() => {
+    return () => {
+      setHoveringProject(false);
+      setHoveringLink(false);
+    };
+  }, [setHoveringProject, setHoveringLink]);
 
   useGSAP(
     () => {
@@ -233,6 +240,10 @@ export default function FeaturedProjects() {
                   <Link
                     href={`/work/${project.slug}`}
                     className="project-title inline-block transition-colors hover:text-primary"
+                    onClick={() => {
+                      setHoveringProject(false);
+                      setHoveringLink(false);
+                    }}
                   >
                     {project.title}
                   </Link>

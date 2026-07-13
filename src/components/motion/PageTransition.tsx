@@ -189,6 +189,7 @@ export default function PageTransition() {
       event.preventDefault();
       event.stopImmediatePropagation();
 
+      document.dispatchEvent(new CustomEvent("app:cursor-reset"));
       pendingNavigationRef.current = true;
 
       cover(() => {

@@ -1,60 +1,46 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useRef } from "react";
-import CaseStudyBadge from "@/components/case-study/CaseStudyBadge";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
+import CaseStudyNextMarquee from "@/components/case-study/CaseStudyNextMarquee";
+import CaseStudyVideo from "@/components/case-study/CaseStudyVideo";
 import { useCaseStudyScrollAnimations } from "@/components/case-study/useCaseStudyScrollAnimations";
-import Magnetic from "@/components/motion/Magnetic";
 
 const ASSET_BASE = "/case-studies/designops-en-qik";
 
-const contextParagraphs = [
-  "Sin una estructura clara, cada diseñador organizaba su trabajo de forma distinta, creando un entorno caótico donde encontrar información se volvía cada vez más complejo.",
-  "Los archivos vivían aislados, el naming era inconsistente y muchas veces era necesario escribir por Slack para localizar diseños específicos.",
-  "Aunque el negocio no presionaba directamente por este problema, era evidente que la falta de estructura afectaba la eficiencia del equipo y dificultaba la colaboración.",
+const challengeParagraphs = [
+  "Nuestro Figma estaba organizado por squads (Cafeína Team, Dulcito de Coco, Feeling Box...), pero el producto había crecido y los diseñadores colaboraban constantemente entre squads distintos.",
+  "El resultado: historias de usuario documentadas en archivos que no correspondían. Una historia del squad de Cafeína Team terminó en el archivo de otro squad, simplemente porque quien la ejecutó pertenecía a un equipo distinto — y encontrarla después se volvió tedioso.",
+  "Esto no era solo desorden: nos restaba velocidad y descubribilidad en el día a día de todo el equipo de diseño.",
 ] as const;
 
-const challengeItems = [
-  "Archivos desordenados dentro de Figma.",
-  "Naming conventions inexistentes.",
-  "Cada diseñador estructuraba su trabajo de manera distinta.",
-  "Búsqueda lenta de información.",
-  "Consumo difícil entre UX, UI y desarrollo.",
+const summaryCards = [
+  { label: "Rol", value: "Design Ops Lead", accent: true },
+  { label: "Herramientas", value: "Figma · Jira", accent: false },
+  { label: "Duración", value: "3 meses", accent: false },
+  { label: "Equipos involucrados", value: "Diseño · Desarrollo · Product Owner", accent: false },
+  { label: "Alcance", value: "Reorganización completa de Qik en Figma", accent: false },
+  {
+    label: "Resultado clave",
+    value: "Estructura estandarizada, adoptada por todo el equipo de diseño",
+    accent: true,
+  },
 ] as const;
 
-const roleItems = [
-  "Arquitecto del proceso.",
-  "Líder operativo.",
-  "Estratega de diseño.",
+const structureItems = [
+  "Organización — todos los colaboradores invitados; diseñadores con permisos de edición, el resto con permisos de solo vista.",
+  "Equipos — agrupados por función real: Productos, Handover, Marketing, Design System, DesignOps y Vendors.",
+  "Proyectos — un espacio por cada producto, funcionalidad core o colaboración externa.",
+  "Archivos — los flujos específicos de cada producto o funcionalidad, con nomenclatura basada en siglas de equipo y feature.",
+  "Páginas — cada archivo dividido en UI Team, UX Team e Información del archivo (handover, cover).",
 ] as const;
 
-const figmaStructureItems = [
-  "Organización por producto, flujo y funcionalidad.",
-  "Naming conventions claras.",
-  "Estructura interna consistente en cada archivo.",
-  "Gobernanza alineada con el Design System.",
-] as const;
-
-const operationalExpansionItems = [
-  "Creación de un sistema de email design para Growth.",
-  "Procesos estructurados para validación y uso de UXCam.",
-  "Estandarización de cómo se construyen y consumen los archivos.",
-] as const;
-
-const adoptionBenefits = [
-  "Menos fricción.",
-  "Menos tiempo buscando.",
-  "Mayor claridad para todos.",
-] as const;
-
-const impactMetrics = [
-  "Búsqueda rápida y clara de información.",
-  "Consumo más fácil entre diseñadores.",
-  "Menos dependencia individual sobre los archivos.",
-  "Mayor alineación en la forma de trabajar.",
-  "Aumento de al menos un 80% en la velocidad de crear Email.",
+const impactItems = [
+  "Menos tiempo perdido buscando archivos o flujos mal ubicados.",
+  "Rituales claros de colaboración con desarrollo: planning, refinamiento y evidencia centralizada en RFD y Jira.",
+  "Handover estandarizado — cualquier diseñador puede tomar un archivo y entender su estado.",
+  "Una base que se prueba, se itera y se ajusta con feedback real del equipo, no una regla fija.",
 ] as const;
 
 export default function DesignOpsEnQikCaseStudy() {
@@ -62,25 +48,30 @@ export default function DesignOpsEnQikCaseStudy() {
   useCaseStudyScrollAnimations(pageRef);
 
   return (
-    <article ref={pageRef} className="cs-article">
+    <article ref={pageRef} className="cs-article cs-designops">
       <CaseStudyHero
-        badge="Diseño · Operación · Procesos"
-        title="DesignOps en Qik."
-        lead="Estructura y procesos que dieron claridad al equipo y permitieron escalar el diseño con consistencia."
+        badge="DesignOps · Workflow"
+        title="Optimización de la arquitectura de Figma y del handoff técnico del equipo."
+        align="center"
+        showBack={false}
+        showLead={false}
       />
 
-      <section className="cs-section cs-section-content">
-        <div className="cs-animate-badge">
-          <CaseStudyBadge>El contexto</CaseStudyBadge>
+      <section className="cs-section cs-designops-hero-media" aria-hidden="true">
+        <div className="cs-animate-media cs-designops-hero-media-frame">
+          <CaseStudyVideo
+            src={`${ASSET_BASE}/hero-figma-org.mp4`}
+            type="video/mp4"
+          />
         </div>
-        <div className="cs-split">
-          <p className="cs-animate-title type-case-section-title">
-            A medida que el equipo de diseño crecía dentro de Qik, también
-            crecía el volumen de archivos, flujos y entregables.
-          </p>
-          <div className="cs-split-body type-case-body-muted">
-            {contextParagraphs.map((paragraph) => (
-              <p key={paragraph} className="cs-animate-text">
+      </section>
+
+      <section className="cs-section cs-designops-section cs-designops-section--compact-top">
+        <div className="cs-designops-inner cs-designops-editorial">
+          <p className="cs-animate-badge cs-designops-label">El desafío</p>
+          <div className="cs-designops-copy-stack">
+            {challengeParagraphs.map((paragraph) => (
+              <p key={paragraph} className="cs-animate-text cs-designops-copy-lg">
                 {paragraph}
               </p>
             ))}
@@ -88,249 +79,222 @@ export default function DesignOpsEnQikCaseStudy() {
         </div>
       </section>
 
-      <section className="cs-section cs-section-media cs-showcase-wrap">
-        <div className="cs-animate-media cs-showcase-surface cs-showcase-surface--media container-site-wide">
-          <div className="cs-showcase-media">
+      <section className="cs-section cs-designops-section">
+        <div className="cs-designops-inner">
+          <h2 className="cs-animate-title cs-designops-page-title pb-8">
+            Resumen del proyecto.
+          </h2>
+          <div className="cs-designops-summary-grid">
+            {summaryCards.map(({ label, value, accent }) => (
+              <div
+                key={label}
+                className={`cs-animate-stagger-item cs-designops-summary-card${
+                  accent ? " cs-designops-summary-card--mint" : ""
+                }`}
+              >
+                <p className="cs-designops-summary-label">{label}</p>
+                <p className="cs-designops-summary-value">{value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="cs-section cs-designops-section">
+        <div className="cs-designops-inner">
+          <div className="cs-designops-section-heading">
+            <h2 className="cs-animate-title cs-designops-page-title">
+              Estructurar para nuestra realidad.
+            </h2>
+          </div>
+
+          <div className="cs-designops-editorial">
+            <p className="cs-animate-badge cs-designops-label">Sistema estructural</p>
+            <div className="cs-designops-copy-stack">
+              <p className="cs-animate-title cs-designops-copy-lg">
+                Propusimos una arquitectura de cinco niveles, adaptada a la realidad de
+                Qik:
+              </p>
+              <ul className="cs-designops-dot-list">
+                {structureItems.map((item) => (
+                  <li key={item} className="cs-animate-stagger-item cs-designops-dot-item">
+                    <span className="cs-designops-dot" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p className="cs-animate-text cs-designops-copy-lg pt-2">
+                No existe una única forma &quot;correcta&quot; de estructurar Figma — la
+                clave fue adaptar la arquitectura recomendada a cómo Qik realmente
+                trabaja.
+              </p>
+            </div>
+          </div>
+
+          <div className="cs-designops-principles-grid">
+            <div>
+              <div className="cs-animate-media cs-designops-principles-media cs-designops-principles-media--square">
+                <Image
+                  src={`${ASSET_BASE}/image-point-figma.png`}
+                  alt="Diagrama de puntos de organización en Figma"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 407px"
+                />
+              </div>
+              <p className="cs-animate-text cs-designops-principles-caption">
+                Todos colaboran dentro de Figma, sin embargo existen reglas para el
+                equipo de Product que son lo que velan por mantener este software
+                organizado.
+              </p>
+            </div>
+
+            <div>
+              <div className="cs-animate-media cs-designops-principles-media cs-designops-principles-media--square">
+                <Image
+                  src={`${ASSET_BASE}/name-pages-into-files.png`}
+                  alt="Nomenclatura de páginas y archivos en Figma"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 407px"
+                />
+              </div>
+            </div>
+
+            <div>
+              <div className="cs-animate-media cs-designops-principles-media cs-designops-principles-media--square">
+                <Image
+                  src={`${ASSET_BASE}/figma-file-list.png`}
+                  alt="Lista de archivos organizados en Figma"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 407px"
+                />
+              </div>
+              <p className="cs-animate-text cs-designops-principles-caption">
+                Para garantizar una buena organización se propuso crear los
+                proyectos basados en funcionalidades, producto y equipos externos
+                al de Product Design.
+              </p>
+            </div>
+
+            <div>
+              <div className="cs-animate-media cs-designops-principles-media cs-designops-principles-media--tall">
+                <Image
+                  src={`${ASSET_BASE}/organizacion-proyectos-archivos.png`}
+                  alt="Organización de proyectos y archivos en Figma"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 407px"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="cs-section cs-designops-section">
+        <div className="cs-designops-inner">
+          <div className="cs-designops-section-heading">
+            <h2 className="cs-animate-title cs-designops-page-title">
+              Pensado para que cualquiera encuentre lo que busca.
+            </h2>
+          </div>
+
+          <div className="cs-designops-editorial">
+            <p className="cs-animate-badge cs-designops-label">Decisiones de diseño</p>
+            <div className="cs-designops-copy-stack">
+              <p className="cs-animate-text cs-designops-copy-lg">
+                Cada archivo se dividió en carpetas claras: UI Team, UX Team y la
+                información necesaria para el traspaso a desarrollo.
+              </p>
+              <p className="cs-animate-text cs-designops-copy-lg">
+                Del lado de UI: exploraciones, el flujo aprobado (UI Check),
+                prototipos y un archivo de descartados para no perder el histórico de
+                decisiones. Del lado de UX: wireframes y benchmark. Y en ambos, una
+                sección de Handover Info y un Cover con título, descripción y fecha —
+                para que cualquier diseñador, nuevo o no, entienda el archivo sin tener
+                que preguntar.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="cs-section cs-designops-section cs-designops-section--showcase">
+        <div className="cs-designops-inner cs-designops-inner--wide">
+          <div className="cs-animate-media cs-designops-showcase-frame">
             <Image
-              src={`${ASSET_BASE}/showcase.png`}
-              alt="Estructura de archivos y flujos de DesignOps en Figma"
+              src={`${ASSET_BASE}/showcase-figma-qik.png`}
+              alt="Estructura visual de archivos Figma en Qik"
               fill
               className="object-cover"
-              sizes="100vw"
-              priority
+              sizes="(max-width: 1056px) 100vw, 1056px"
             />
           </div>
         </div>
       </section>
 
-      <section className="cs-section cs-section-content">
-        <div className="cs-two-col">
-          <div className="cs-col-block">
-            <div className="cs-animate-badge">
-              <CaseStudyBadge>El desafío</CaseStudyBadge>
-            </div>
-            <ul className="cs-list">
-              {challengeItems.map((item) => (
-                <li key={item} className="cs-animate-stagger-item">
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <p className="cs-animate-text type-case-body">
-              Más que un problema visual, era un problema operativo.
-            </p>
+      <section className="cs-section cs-designops-section">
+        <div className="cs-designops-inner">
+          <div className="cs-designops-section-heading">
+            <h2 className="cs-animate-title cs-designops-page-title">
+              La nueva estructura no cambió lo que diseñamos, cambió cómo lo
+              encontramos y cómo lo entregamos.
+            </h2>
           </div>
 
-          <div className="cs-col-block">
-            <div className="cs-animate-badge">
-              <CaseStudyBadge>Mi rol</CaseStudyBadge>
+          <div className="cs-designops-editorial">
+            <p className="cs-animate-badge cs-designops-label">El impacto</p>
+            <div className="cs-designops-copy-stack">
+              <div className="cs-impact-list">
+                {impactItems.map((item, index) => (
+                  <div
+                    key={item}
+                    className="cs-animate-stagger-item cs-impact-row"
+                  >
+                    <span className="shrink-0 type-case-impact-num">
+                      {index + 1}.
+                    </span>
+                    <p className="type-case-impact-text">{item}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="cs-animate-title cs-designops-impact-quote">
+                Más que una carpeta bien nombrada, esto le dio al equipo un lenguaje
+                común para trabajar.
+              </p>
             </div>
-            <p className="cs-animate-text type-case-body">
-              Identifiqué que antes de escalar el diseño necesitábamos ordenar
-              cómo trabajábamos.
-            </p>
-            <p className="cs-animate-text type-case-body">
-              Sin que fuera una iniciativa impulsada por liderazgo, decidí
-              tomar acción y proponer una nueva estructura para el equipo,
-              asumiendo un rol que combinaba:
-            </p>
-            <ul className="cs-list">
-              {roleItems.map((item) => (
-                <li key={item} className="cs-animate-stagger-item">
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <p className="cs-animate-title type-case-lead">
-              Tras validar la propuesta con mi jefe, inicié la transformación
-              interna.
-            </p>
           </div>
         </div>
       </section>
 
-      <section className="cs-section cs-section-media">
-        <div className="cs-animate-media cs-surface-media relative mx-auto aspect-[1440/504] container-site-wide overflow-hidden">
-          <Image
-            src={`${ASSET_BASE}/banner-1.png`}
-            alt="Organización de proyectos en Figma"
-            fill
-            className="object-cover"
-            sizes="100vw"
-          />
-        </div>
-      </section>
-
-      <section className="cs-section cs-section-content">
-        <div className="cs-two-col">
-          <div className="cs-col-block">
-            <div className="cs-animate-badge">
-              <CaseStudyBadge>Decisiones de diseño</CaseStudyBadge>
-            </div>
-            <p className="cs-animate-title type-case-section-title">
-              El primer paso fue redefinir la estructura completa dentro de
-              Figma:
-            </p>
-            <ul className="cs-list">
-              {figmaStructureItems.map((item) => (
-                <li key={item} className="cs-animate-stagger-item">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="cs-col-block cs-col-block--stagger">
-            <p className="cs-animate-text type-case-body">
-              Además, expandí esta visión hacia otros sistemas operativos del
-              equipo:
-            </p>
-            <ul className="cs-list">
-              {operationalExpansionItems.map((item) => (
-                <li key={item} className="cs-animate-stagger-item">
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <p className="cs-animate-title type-case-lead">
-              No se trataba solo de ordenar archivos, sino de crear una forma
-              común de trabajar.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="cs-section cs-section-media">
-        <div className="cs-animate-media cs-surface-media relative mx-auto aspect-[1440/504] container-site-wide overflow-hidden">
-          <Image
-            src={`${ASSET_BASE}/banner-2.png`}
-            alt="Sistema de email design y procesos operativos"
-            fill
-            className="object-cover"
-            sizes="100vw"
-          />
-        </div>
-      </section>
-
-      <section className="cs-section cs-section-content">
-        <div className="cs-split cs-split--impact">
-          <div className="cs-col-block">
-            <div className="cs-animate-badge">
-              <CaseStudyBadge>Resistencia y adopción</CaseStudyBadge>
-            </div>
-            <p className="cs-animate-title type-case-section-title">
-              Como todo cambio estructural, al inicio hubo resistencia.
-            </p>
-          </div>
-          <div className="cs-split-body type-case-body">
-            <p className="cs-animate-title type-case-lead">
-              El equipo estaba acostumbrado a su forma individual de trabajar,
-              pero con el tiempo la estructura comenzó a demostrar su valor:
-            </p>
-            <ul className="cs-list">
-              {adoptionBenefits.map((item) => (
-                <li key={item} className="cs-animate-stagger-item">
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <p className="cs-animate-text">
-              Lo que comenzó como una decisión individual se convirtió en una
-              nueva rutina operativa para el equipo.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="cs-section cs-section-media">
-        <div className="cs-animate-media cs-surface-media relative mx-auto aspect-[1440/504] container-site-wide overflow-hidden">
-          <Image
-            src={`${ASSET_BASE}/banner-3.png`}
-            alt="Adopción del nuevo flujo de trabajo del equipo"
-            fill
-            className="object-cover"
-            sizes="100vw"
-          />
-        </div>
-      </section>
-
-      <section className="cs-section cs-section-content">
-        <div className="cs-split cs-split--metrics">
-          <div className="cs-col-block">
-            <div className="cs-animate-badge">
-              <CaseStudyBadge>El impacto</CaseStudyBadge>
-            </div>
-            <p className="cs-animate-title type-case-section-title">
-              Los cambios transformaron el día a día del diseño
-            </p>
-          </div>
-          <div className="cs-split-body">
-            <div className="cs-impact-list">
-              {impactMetrics.map((item, index) => (
-                <div
-                  key={item}
-                  className="cs-animate-stagger-item cs-impact-row"
-                >
-                  <span className="shrink-0 type-case-impact-num">
-                    {index + 1}.
-                  </span>
-                  <p className="type-case-impact-text">{item}</p>
-                </div>
-              ))}
-            </div>
-            <p className="cs-animate-title type-case-lead pt-8">
-              Hoy, todos diseñan bajo una misma lógica operativa, permitiendo
-              que el diseño sea más sostenible y colaborativo.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="cs-section cs-primary-wrap">
-        <div className="cs-primary-block cs-primary-block--split mx-auto max-w-7xl">
-          <div className="space-y-4">
-            <div className="cs-animate-badge">
-              <CaseStudyBadge variant="on-primary">Aprendizaje</CaseStudyBadge>
-            </div>
+      <section className="cs-section cs-designops-learning-wrap cs-primary-wrap">
+        <div className="cs-designops-learning">
+          <div className="space-y-6">
+            <p className="cs-animate-badge cs-designops-label">El aprendizaje</p>
             <h2 className="overflow-hidden type-case-result-title">
               <span className="cs-animate-line block will-change-transform">
-                Este proceso me enseñó que muchas veces los mayores bloqueos no
-                están en la creatividad, sino en la falta de estructura.
+                Ordenar Figma me enseñó que la estructura no es burocracia — es lo que
+                le da velocidad real a un equipo que crece.
               </span>
             </h2>
           </div>
-          <div className="space-y-6 type-case-body">
+          <div className="cs-designops-learning-body space-y-2 type-case-body">
             <p className="cs-animate-text">
-              Diseñar sistemas también significa diseñar procesos.
+              Antes de esto, pensaba que &quot;organizar archivos&quot; era una tarea
+              menor comparada con diseñar pantallas. Hoy sé que es al revés: sin una
+              base ordenada, cada pantalla nueva cuesta más de lo que debería.
             </p>
-            <p className="cs-animate-title type-case-lead">
-              Hoy veo el DesignOps como una extensión natural del diseño de
-              producto: una forma de asegurar que las ideas puedan crecer sin
-              perder orden ni intención.
+            <p className="cs-animate-text">
+              La parte más valiosa no fue definir la estructura, sino lograr que el
+              equipo la adoptara como su forma natural de trabajar.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="cs-section cs-section-content cs-section-content--narrow">
-        <div className="cs-next-case">
-          <p className="cs-animate-title cs-next-case-title type-case-section-title">
-            Cuando el diseño encuentra estructura, el equipo puede enfocarse en
-            crear con intención.
-          </p>
-          <div className="cs-animate-text">
-            <Magnetic>
-              <Link
-                href="/#work"
-                className="type-case-link inline-block transition-colors hover:text-primary"
-              >
-                Conoce cómo estas decisiones impactaron otros proyectos dentro
-                del banco
-              </Link>
-            </Magnetic>
-          </div>
-        </div>
-      </section>
+      <CaseStudyNextMarquee href="/work/disenar-claridad-desde-cero" />
     </article>
   );
 }

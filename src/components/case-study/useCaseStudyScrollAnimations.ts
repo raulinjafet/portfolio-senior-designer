@@ -7,8 +7,72 @@ import { RefObject } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const SCROLL_START = "top 82%";
+const SCROLL_START = "top 86%";
 const SCROLL_START_PRIMARY = "top 92%";
+
+type RevealOptions = {
+  start?: string;
+};
+
+function revealElements(
+  elements: Element[],
+  from: gsap.TweenVars,
+  to: gsap.TweenVars,
+  options?: RevealOptions,
+) {
+  elements.forEach((element) => {
+    gsap.set(element, from);
+    gsap.to(element, {
+      ...to,
+      scrollTrigger: {
+        trigger: element,
+        start: options?.start ?? SCROLL_START,
+        once: true,
+      },
+    });
+  });
+}
+
+function getParallaxTargets(container: Element) {
+  const phone = container.querySelector<HTMLElement>(".cs-claridad-loader-phone");
+  if (phone) return [phone];
+
+  return gsap.utils.toArray<HTMLElement>("img, video", container);
+}
+
+function applyMediaParallax(containers: Element[]) {
+  containers.forEach((container) => {
+    const targets = getParallaxTargets(container);
+    if (!targets.length) return;
+
+    targets.forEach((target) => {
+      const overscale = target.classList.contains("cs-claridad-loader-phone")
+        ? 1
+        : 1.1;
+
+      gsap.set(target, {
+        scale: overscale,
+        transformOrigin: "center center",
+        force3D: true,
+      });
+
+      gsap.fromTo(
+        target,
+        { yPercent: -12 },
+        {
+          yPercent: 12,
+          ease: "none",
+          scrollTrigger: {
+            trigger: container,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.65,
+          },
+        },
+      );
+    });
+  });
+}
 
 export function useCaseStudyScrollAnimations(
   pageRef: RefObject<HTMLElement | null>,
@@ -22,132 +86,145 @@ export function useCaseStudyScrollAnimations(
         "(prefers-reduced-motion: reduce)",
       ).matches;
 
-      const sections = gsap.utils.toArray<HTMLElement>(".cs-section", root);
+      const animatedSelector =
+        ".cs-animate-badge, .cs-animate-title, .cs-animate-text, .cs-animate-line, .cs-animate-media, .cs-animate-stagger-item";
 
       if (prefersReducedMotion) {
-        sections.forEach((section) => {
-          gsap.set(section.querySelectorAll(".cs-animate-badge, .cs-animate-title, .cs-animate-text, .cs-animate-media, .cs-animate-stagger-item"), {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-          });
-          gsap.set(section.querySelectorAll(".cs-animate-line"), { y: "0%" });
+        gsap.set(root.querySelectorAll(animatedSelector), {
+          opacity: 1,
+          y: 0,
+          scale: 1,
         });
+        gsap.set(root.querySelectorAll(".cs-animate-line"), { y: "0%" });
+        gsap.set(
+          root.querySelectorAll(
+            ".cs-animate-media img, .cs-animate-media video, .cs-claridad-loader-phone",
+          ),
+          { yPercent: 0, scale: 1 },
+        );
         return;
       }
 
-      sections.forEach((section) => {
-        const isPrimarySection = section.classList.contains("cs-primary-wrap");
+      const badges = gsap.utils.toArray<Element>(".cs-animate-badge", root);
+      const lines = gsap.utils.toArray<Element>(".cs-animate-line", root);
+      const titles = gsap.utils.toArray<Element>(
+        ".cs-animate-title:not(.type-case-lead)",
+        root,
+      );
+      const texts = gsap.utils.toArray<Element>(
+        ".cs-animate-text, .cs-animate-title.type-case-lead",
+        root,
+      );
+      const media = gsap.utils.toArray<Element>(
+        ".cs-animate-media:not(.cs-primary-block)",
+        root,
+      );
+      const staggerItems = gsap.utils.toArray<Element>(
+        ".cs-animate-stagger-item",
+        root,
+      );
 
-        const timeline = gsap.timeline({
+      const primaryStart = (element: Element) =>
+        element.closest(".cs-primary-wrap")
+          ? SCROLL_START_PRIMARY
+          : SCROLL_START;
+
+      revealElements(
+        badges,
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.75, ease: "power3.out" },
+      );
+
+      lines.forEach((line) => {
+        gsap.set(line, { y: "100%" });
+        gsap.to(line, {
+          y: "0%",
+          duration: 0.95,
+          ease: "power4.out",
           scrollTrigger: {
-            trigger: section,
-            start: isPrimarySection ? SCROLL_START_PRIMARY : SCROLL_START,
+            trigger: line,
+            start: primaryStart(line),
             once: true,
           },
         });
-
-        const badge = section.querySelector(".cs-animate-badge");
-        const lines = section.querySelectorAll(".cs-animate-line");
-        const titles = section.querySelectorAll(".cs-animate-title");
-        const texts = section.querySelectorAll(".cs-animate-text");
-        const media = section.querySelectorAll(
-          ".cs-animate-media:not(.cs-primary-block)",
-        );
-        const staggerItems = section.querySelectorAll(
-          ".cs-animate-stagger-item",
-        );
-
-        if (badge) {
-          gsap.set(badge, { opacity: 0, y: 14 });
-          timeline.to(badge, {
-            opacity: 1,
-            y: 0,
-            duration: 0.75,
-            ease: "power3.out",
-          });
-        }
-
-        if (lines.length) {
-          gsap.set(lines, { y: "100%" });
-          timeline.to(
-            lines,
-            {
-              y: "0%",
-              duration: 0.95,
-              stagger: 0.05,
-              ease: "power4.out",
-            },
-            badge ? "-=0.45" : 0,
-          );
-        }
-
-        if (titles.length) {
-          gsap.set(titles, { opacity: 0, y: 28 });
-          timeline.to(
-            titles,
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.9,
-              stagger: 0.07,
-              ease: "power3.out",
-            },
-            lines.length || badge ? "-=0.55" : 0,
-          );
-        }
-
-        if (texts.length) {
-          gsap.set(texts, { opacity: 0, y: 18 });
-          timeline.to(
-            texts,
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              stagger: 0.07,
-              ease: "power2.out",
-            },
-            "-=0.65",
-          );
-        }
-
-        if (staggerItems.length) {
-          gsap.set(staggerItems, { opacity: 0, y: 22 });
-          timeline.to(
-            staggerItems,
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.85,
-              stagger: 0.09,
-              ease: "power3.out",
-            },
-            "-=0.55",
-          );
-        }
-
-        if (media.length) {
-          gsap.set(media, { opacity: 0, scale: 0.97, y: 20 });
-          timeline.to(
-            media,
-            {
-              opacity: 1,
-              scale: 1,
-              y: 0,
-              duration: 1,
-              stagger: 0.1,
-              ease: "power3.out",
-            },
-            "-=0.75",
-          );
-        }
       });
+
+      titles.forEach((title) => {
+        gsap.set(title, { opacity: 0, y: 28 });
+        gsap.to(title, {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: title,
+            start: primaryStart(title),
+            once: true,
+          },
+        });
+      });
+
+      texts.forEach((text) => {
+        gsap.set(text, { opacity: 0, y: 18 });
+        gsap.to(text, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: text,
+            start: primaryStart(text),
+            once: true,
+          },
+        });
+      });
+
+      staggerItems.forEach((item, index) => {
+        gsap.set(item, { opacity: 0, y: 22 });
+        gsap.to(item, {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          delay: Math.min(index * 0.05, 0.2),
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: item,
+            start: primaryStart(item),
+            once: true,
+          },
+        });
+      });
+
+      media.forEach((item) => {
+        gsap.set(item, { opacity: 0, scale: 0.97, y: 20 });
+        gsap.to(item, {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: item,
+            start: primaryStart(item),
+            once: true,
+          },
+        });
+      });
+
+      applyMediaParallax(media);
 
       const refresh = () => ScrollTrigger.refresh();
       refresh();
       window.addEventListener("load", refresh, { once: true });
       window.addEventListener("resize", refresh);
+
+      root.querySelectorAll("img, video").forEach((asset) => {
+        if (asset instanceof HTMLImageElement && asset.complete) return;
+
+        asset.addEventListener("load", refresh, { once: true });
+        asset.addEventListener("loadedmetadata", refresh, { once: true });
+        asset.addEventListener("error", refresh, { once: true });
+      });
 
       return () => {
         window.removeEventListener("resize", refresh);

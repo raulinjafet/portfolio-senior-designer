@@ -1,0 +1,316 @@
+/* ─── Caso 02: Cobalt Design System (Figma 283:8457) ─── */
+@layer components {
+  .cs-cobalt {
+    --cs-cobalt-narrow: 52.875rem; /* 846px */
+    --cs-cobalt-wide: 66rem; /* 1056px */
+    --cs-cobalt-mint: var(--color-green-100);
+  }
+
+  .cs-cobalt-section {
+    padding-inline: var(--container-padding-x-mobile);
+    padding-block: var(--spacing-large);
+  }
+
+  @media (min-width: 640px) {
+    .cs-cobalt-section {
+      padding-inline: var(--spacing-2x-large);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .cs-cobalt-section {
+      padding-block: var(--spacing-3x-large);
+    }
+  }
+
+  .cs-cobalt-section--compact-top {
+    padding-top: var(--spacing-large);
+  }
+
+  .cs-cobalt-section--showcase {
+    padding-block: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .cs-cobalt-section--compact-top {
+      padding-top: var(--spacing-large);
+      padding-bottom: var(--spacing-3x-large);
+    }
+  }
+
+  .cs-cobalt-inner {
+    width: 100%;
+    max-width: var(--cs-cobalt-narrow);
+    margin-inline: auto;
+  }
+
+  .cs-cobalt-inner--wide {
+    max-width: var(--cs-cobalt-wide);
+  }
+
+  .cs-cobalt-hero-media {
+    position: relative;
+    margin-top: calc(var(--spacing-medium) * -1);
+    padding-inline: var(--container-padding-x-mobile);
+    padding-bottom: var(--spacing-large);
+  }
+
+  @media (min-width: 640px) {
+    .cs-cobalt-hero-media {
+      margin-top: calc(var(--spacing-large) * -1);
+      padding-inline: var(--spacing-2x-large);
+    }
+  }
+
+  .cs-cobalt-hero-media-frame {
+    position: relative;
+    margin-inline: auto;
+    width: 100%;
+    max-width: var(--cs-cobalt-wide);
+    aspect-ratio: 1056 / 704;
+    overflow: hidden;
+    border-radius: var(--radius-xlarge);
+  }
+
+  .cs-cobalt-editorial {
+    display: grid;
+    gap: var(--spacing-x-small);
+  }
+
+  @media (min-width: 768px) {
+    .cs-cobalt-editorial {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 5fr);
+      column-gap: var(--spacing-x-small);
+      align-items: start;
+    }
+  }
+
+  .cs-cobalt-label {
+    font-size: var(--font-size-xs);
+    line-height: var(--leading-eyebrow);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .cs-cobalt-copy-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2x-small);
+  }
+
+  .cs-cobalt-copy-lg {
+    font-size: var(--font-size-lg);
+    line-height: var(--leading-heading);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-heading-sm);
+    color: var(--foreground);
+  }
+
+  .cs-cobalt-page-title {
+    font-size: var(--font-size-xl);
+    line-height: var(--leading-heading);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-heading-md);
+    color: var(--foreground);
+  }
+
+  @media (min-width: 640px) {
+    .cs-cobalt-page-title {
+      font-size: var(--font-size-2xl);
+      letter-spacing: var(--tracking-heading-lg);
+    }
+  }
+
+  .cs-cobalt-section-heading {
+    border-bottom: 1px solid var(--alias-border-02);
+    padding-top: var(--spacing-2x-small);
+    padding-bottom: var(--spacing-small);
+    margin-bottom: var(--spacing-small);
+  }
+
+  .cs-cobalt-summary-grid {
+    display: grid;
+    gap: var(--spacing-2x-small);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .cs-cobalt-summary-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .cs-cobalt-summary-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3x-small);
+    border-radius: var(--radius-medium);
+    padding: var(--spacing-small);
+    background-color: var(--surface);
+  }
+
+  .cs-cobalt-summary-card--mint {
+    background-color: var(--cs-cobalt-mint);
+  }
+
+  .cs-cobalt-summary-label {
+    font-size: var(--font-size-xs);
+    line-height: var(--leading-eyebrow);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--alias-text-accent-title);
+  }
+
+  .cs-cobalt-summary-value {
+    font-size: var(--font-size-lg);
+    line-height: var(--leading-heading);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-heading-sm);
+    color: var(--foreground);
+  }
+
+  .cs-cobalt-showcase-frame {
+    position: relative;
+    margin-inline: auto;
+    width: 100%;
+    max-width: var(--cs-cobalt-wide);
+    aspect-ratio: 1056 / 600;
+    overflow: hidden;
+    border-radius: var(--radius-xlarge);
+    background-color: var(--surface);
+  }
+
+  .cs-cobalt-dot-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .cs-cobalt-dot-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-2x-small);
+    padding-block: var(--spacing-3x-small);
+    font-size: var(--font-size-md);
+    line-height: var(--leading-body-figma);
+    color: var(--foreground);
+  }
+
+  .cs-cobalt-dot {
+    flex-shrink: 0;
+    width: 0.75rem;
+    height: 1.375rem;
+    background: url("/case-studies/cobalt-design-system/list-dot.png") center / contain
+      no-repeat;
+  }
+
+  .cs-cobalt-principles-grid {
+    display: grid;
+    gap: var(--spacing-medium);
+    margin-top: var(--spacing-small);
+  }
+
+  @media (min-width: 768px) {
+    .cs-cobalt-principles-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--spacing-small);
+      row-gap: 2.75rem;
+    }
+
+    .cs-cobalt-principles-grid > :nth-child(2),
+    .cs-cobalt-principles-grid > :nth-child(4) {
+      padding-top: var(--spacing-medium);
+    }
+  }
+
+  .cs-cobalt-principles-media {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-large);
+    width: 100%;
+  }
+
+  .cs-cobalt-principles-media--square {
+    aspect-ratio: 1 / 1;
+    max-width: 25.4375rem;
+  }
+
+  .cs-cobalt-principles-caption {
+    padding-top: var(--spacing-x-small);
+    padding-bottom: var(--spacing-2x-small);
+    font-size: var(--font-size-lg);
+    line-height: var(--leading-heading);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-heading-sm);
+    color: var(--foreground);
+  }
+
+  .cs-cobalt-impact-quote {
+    padding-top: var(--spacing-small);
+    font-size: var(--font-size-lg);
+    line-height: var(--leading-heading);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-heading-sm);
+    color: var(--foreground);
+  }
+
+  .cs-cobalt-impact-attribution {
+    padding-top: var(--spacing-2x-small);
+    font-size: var(--font-size-xs);
+    line-height: var(--leading-body-figma);
+    color: var(--alias-text-accent-title);
+  }
+
+  .cs-cobalt-learning-wrap {
+    padding-inline: var(--container-padding-x-mobile);
+    padding-block: 0;
+  }
+
+  @media (min-width: 640px) {
+    .cs-cobalt-learning-wrap {
+      padding-inline: var(--spacing-2x-large);
+    }
+  }
+
+  .cs-cobalt-learning {
+    display: grid;
+    gap: var(--spacing-x-small);
+    width: 100%;
+    max-width: var(--cs-cobalt-wide);
+    margin-inline: auto;
+    border-radius: var(--radius-xlarge);
+    background-color: var(--cs-cobalt-mint);
+    padding: var(--spacing-large) var(--container-padding-x-mobile);
+    color: var(--foreground);
+  }
+
+  @media (min-width: 768px) {
+    .cs-cobalt-learning {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      column-gap: var(--spacing-medium);
+      padding: var(--spacing-2x-large) clamp(2rem, 8vw, 6.5625rem);
+    }
+
+    .cs-cobalt-learning-body {
+      padding-top: var(--spacing-medium);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .cs-cobalt-learning {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 4fr);
+    }
+  }
+
+  .cs-cobalt-learning .type-case-result-title,
+  .cs-cobalt-learning .type-case-body,
+  .cs-cobalt-learning .type-case-lead {
+    color: var(--foreground);
+  }
+}

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import DesignOpsEnQikCaseStudy from "@/components/case-study/designops-en-qik/DesignOpsEnQikCaseStudy";
 
 export const metadata: Metadata = {
-  title: "DesignOps en Qik. — Raulyn Ladera",
+  title: "Optimización de la arquitectura de Figma — Raulyn Ladera",
   description:
-    "Caso de estudio sobre la estructura y procesos de DesignOps en Qik Banco Digital: gobernanza en Figma, naming conventions y escalabilidad del equipo de diseño.",
+    "Caso de estudio sobre DesignOps en Qik: reorganización de Figma, handoff técnico estandarizado y arquitectura adoptada por todo el equipo de diseño.",
 };
 
 export default function DesignOpsEnQikPage() {

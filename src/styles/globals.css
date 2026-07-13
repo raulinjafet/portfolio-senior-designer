@@ -16,6 +16,9 @@
 @import "./hero.css";
 @import "./home.css";
 @import "./case-study.css";
+@import "./disenar-claridad.css";
+@import "./designops-en-qik.css";
+@import "./cobalt-design-system.css";
 @import "./page-transition.css";
 
 @theme inline {

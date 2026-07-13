@@ -4,10 +4,12 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
 } from "react";
+import { usePathname } from "next/navigation";
 
 type CursorContextValue = {
   isHoveringLink: boolean;
@@ -19,8 +21,14 @@ type CursorContextValue = {
 const CursorContext = createContext<CursorContextValue | null>(null);
 
 export function CursorProvider({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
   const [isHoveringLink, setIsHoveringLink] = useState(false);
   const [isHoveringProject, setIsHoveringProject] = useState(false);
+
+  const resetCursor = useCallback(() => {
+    setIsHoveringLink(false);
+    setIsHoveringProject(false);
+  }, []);
 
   const setHoveringLink = useCallback((hovering: boolean) => {
     setIsHoveringLink(hovering);
@@ -29,6 +37,16 @@ export function CursorProvider({ children }: { children: ReactNode }) {
   const setHoveringProject = useCallback((hovering: boolean) => {
     setIsHoveringProject(hovering);
   }, []);
+
+  useEffect(() => {
+    resetCursor();
+  }, [pathname, resetCursor]);
+
+  useEffect(() => {
+    const onReset = () => resetCursor();
+    document.addEventListener("app:cursor-reset", onReset);
+    return () => document.removeEventListener("app:cursor-reset", onReset);
+  }, [resetCursor]);
 
   const value = useMemo(
     () => ({

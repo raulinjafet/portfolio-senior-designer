@@ -48,6 +48,22 @@
     max-width: 66rem;
   }
 
+  .cs-case-hero-inner--centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 66rem;
+  }
+
+  .cs-case-hero--centered .cs-case-hero-title {
+    width: 100%;
+  }
+
+  .cs-case-hero--centered .type-eyebrow {
+    text-align: center;
+  }
+
   .cs-case-hero-back-wrap {
     margin-bottom: var(--spacing-medium);
   }
@@ -191,6 +207,23 @@
   .cs-showcase-surface--media {
     padding: 0;
     overflow: hidden;
+  }
+
+  .cs-animate-media {
+    overflow: hidden;
+  }
+
+  .cs-animate-media img,
+  .cs-animate-media video {
+    will-change: transform;
+  }
+
+  .cs-case-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .cs-showcase-media {
@@ -360,6 +393,62 @@
     align-items: center;
     gap: var(--spacing-x-small);
     text-align: center;
+  }
+
+  .cs-next-marquee-section {
+    position: relative;
+    z-index: 2;
+    padding-inline: 0;
+    padding-block: var(--spacing-3x-large);
+    overflow: hidden;
+  }
+
+  .cs-next-marquee {
+    display: block;
+    width: 100%;
+    min-height: 4.625rem;
+    color: var(--foreground);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease-out;
+  }
+
+  .cs-next-marquee:hover {
+    color: var(--primary);
+  }
+
+  .cs-next-marquee__viewport {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .cs-next-marquee__track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .cs-next-marquee__group {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: clamp(3rem, 8vw, 8.25rem);
+    padding-inline: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .cs-next-marquee__item {
+    flex-shrink: 0;
+    font-size: var(--font-size-2xl);
+    line-height: var(--leading-heading);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--tracking-heading-xl);
+    white-space: nowrap;
+  }
+
+  @media (min-width: 640px) {
+    .cs-next-marquee__item {
+      font-size: var(--font-size-3xl);
+    }
   }
 
   /* ─── Decision phones ─── */
