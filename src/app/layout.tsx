@@ -14,8 +14,27 @@ const redHatDisplay = Red_Hat_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Raulyn Ladera — Product Designer",
-  description: "Portfolio of a growth-driven product designer.",
+  metadataBase: new URL("https://portfolio-senior-designer.vercel.app"),
+  title: "Raulyn Ladera — Senior Product Designer",
+  description:
+    "Diseño de productos digitales donde la estética excepcional, la usabilidad científica y el rendimiento técnico funcionan en perfecta sincronía.",
+  openGraph: {
+    title: "Raulyn Ladera — Senior Product Designer",
+    description:
+      "Diseño de productos digitales donde la estética excepcional, la usabilidad científica y el rendimiento técnico funcionan en perfecta sincronía.",
+    url: "https://portfolio-senior-designer.vercel.app/",
+    siteName: "Raulyn Ladera Portfolio",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Raulyn Ladera — Senior Product Designer",
+      },
+    ],
+    locale: "es_DO",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
