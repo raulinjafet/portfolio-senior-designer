@@ -14,7 +14,7 @@ const redHatDisplay = Red_Hat_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://portfolio-senior-designer.vercel.app"),
+  metadataBase: new URL("https://raulynladera.vercel.app"),
   title: "Raulyn Ladera — Senior Product Designer",
   description:
     "Diseño de productos digitales donde la estética excepcional, la usabilidad científica y el rendimiento técnico funcionan en perfecta sincronía.",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: "Raulyn Ladera — Senior Product Designer",
     description:
       "Diseño de productos digitales donde la estética excepcional, la usabilidad científica y el rendimiento técnico funcionan en perfecta sincronía.",
-    url: "https://portfolio-senior-designer.vercel.app/",
+    url: "https://raulynladera.vercel.app/",
     siteName: "Raulyn Ladera Portfolio",
     images: [
       {
