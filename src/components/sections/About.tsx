@@ -4,27 +4,22 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const aboutTitleLines = [
-  { text: "Mi enfoque constante:", accent: true },
-  { text: "perfeccionar, estructurar", accent: false },
-  { text: "y liderar el diseño del mañana.", accent: false },
-] as const;
-
-const skills = [
-  "Product Design",
-  "Adobe siute",
-  "Design System",
-  "Visual Design",
-  "Leadership",
-  "Figma",
-] as const;
+type AboutTitleLine = {
+  text: string;
+  accent: boolean;
+};
 
 export default function About() {
+  const t = useTranslations("about");
   const sectionRef = useRef<HTMLElement>(null);
+
+  const aboutTitleLines = t.raw("titleLines") as AboutTitleLine[];
+  const skills = t.raw("skills") as string[];
 
   useGSAP(
     () => {
@@ -90,7 +85,7 @@ export default function About() {
         "-=0.55",
       );
     },
-    { scope: sectionRef },
+    { scope: sectionRef, dependencies: [aboutTitleLines, skills.join("|")] },
   );
 
   return (
@@ -104,7 +99,7 @@ export default function About() {
         <div className="about-grid">
           <div className="about-left">
             <div className="about-copy">
-              <p className="type-eyebrow">Sobre mí</p>
+              <p className="type-eyebrow">{t("eyebrow")}</p>
 
               <h2 id="about-heading" className="type-about-title mt-6">
                 {aboutTitleLines.map(({ text, accent }) => (
@@ -133,7 +128,7 @@ export default function About() {
           <div className="about-portrait-wrap about-media">
             <Image
               src="/home/about-portrait.jpg"
-              alt="Raulyn Ladera trabajando en un espacio al aire libre"
+              alt={t("portraitAlt")}
               fill
               className="about-portrait-img"
               sizes="(max-width: 1024px) 100vw, 480px"
@@ -144,20 +139,14 @@ export default function About() {
             <div className="about-team-wrap about-media">
               <Image
                 src="/home/about-team.jpg"
-                alt="Equipo de diseño en Qik"
+                alt={t("teamAlt")}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 373px"
               />
             </div>
 
-            <p className="about-bio about-media">
-              A lo largo de mi carrera, he consolidado mi experiencia liderando
-              equipos de producto y escalando sistemas de diseño eficaces. Abordo
-              cada proyecto conectando las necesidades reales de los usuarios con
-              los objetivos estratégicos del negocio, transformando la complejidad
-              en interfaces intuitivas y memorables.
-            </p>
+            <p className="about-bio about-media">{t("bio")}</p>
           </div>
         </div>
       </div>

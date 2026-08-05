@@ -3,12 +3,14 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTranslations } from "next-intl";
 import { useRef } from "react";
 import Magnetic from "@/components/motion/Magnetic";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ContactCTA() {
+  const t = useTranslations("contact");
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -46,10 +48,10 @@ export default function ContactCTA() {
       aria-labelledby="contact-heading"
     >
       <div ref={contentRef} className="container-site-cta contact-cta-inner">
-        <p className="type-cta-eyebrow">¿Hacemos algo juntos?</p>
+        <p className="type-cta-eyebrow">{t("eyebrow")}</p>
 
         <h2 id="contact-heading" className="type-cta-title contact-cta-title">
-          Lidero el diseño, estructuro sistemas y potencio tu producto digital.
+          {t("title")}
         </h2>
 
         <div className="contact-cta-actions">
@@ -60,13 +62,13 @@ export default function ContactCTA() {
               rel="noopener noreferrer"
               className="btn btn-secondary-lg"
             >
-              Descargar CV
+              {t("downloadCv")}
             </a>
           </Magnetic>
 
           <Magnetic>
             <a href="mailto:raulin534@gmail.com" className="btn btn-tertiary-lg">
-              Contáctame
+              {t("contactMe")}
             </a>
           </Magnetic>
         </div>

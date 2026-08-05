@@ -3,30 +3,25 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTranslations } from "next-intl";
 import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const h1Full =
-  "Creo sistemas de diseño y experiencias visuales que conectan a las personas con el negocio.";
-
-const h1Lines = [
-  "Creo sistemas de diseño",
-  "y experiencias visuales que",
-  "conectan a las personas con el negocio.",
-] as const;
-
-const metrics = [
-  { value: 12, label: "años de experiencia" },
-  { value: 30, label: "proyectos realizados" },
-] as const;
 
 function isDesktopHero() {
   return window.matchMedia("(min-width: 1024px)").matches;
 }
 
 export default function Hero() {
+  const t = useTranslations("hero");
   const sectionRef = useRef<HTMLElement>(null);
+
+  const h1Full = t("titleFull");
+  const h1Lines = t.raw("titleLines") as string[];
+  const metrics = [
+    { value: 12, label: t("metrics.experience") },
+    { value: 30, label: t("metrics.projects") },
+  ] as const;
 
   useGSAP(
     () => {
@@ -192,7 +187,7 @@ export default function Hero() {
         });
       }
     },
-    { scope: sectionRef },
+    { scope: sectionRef, dependencies: [h1Full, h1Lines.join("|"), metrics[0].label, metrics[1].label] },
   );
 
   return (
@@ -200,14 +195,12 @@ export default function Hero() {
       ref={sectionRef}
       data-header-inverse
       className="hero-band"
-      aria-label="Introducción"
+      aria-label={t("ariaLabel")}
     >
       <div className="hero-band-grid" aria-hidden="true" />
 
       <div className="hero-inner container-site">
-        <p className="hero-preheader type-eyebrow">
-          Product &amp; Design System Designer.
-        </p>
+        <p className="hero-preheader type-eyebrow">{t("eyebrow")}</p>
 
         <div className="hero-title-block">
           <h1 className="type-hero-title">
@@ -239,11 +232,7 @@ export default function Hero() {
             ))}
           </div>
 
-          <p className="hero-body-copy type-body">
-            Combinando estrategia, interfaces intuitivas y dirección de equipos
-            para transformar ideas complejas en productos digitales de alto
-            impacto.
-          </p>
+          <p className="hero-body-copy type-body">{t("body")}</p>
         </div>
       </div>
     </section>

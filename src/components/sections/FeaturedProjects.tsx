@@ -4,15 +4,22 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useRef, useState, useEffect, type MouseEvent } from "react";
 import { useCursor } from "@/context/CursorContext";
 import { projects, type Project } from "@/data/projects";
+import { Link } from "@/i18n/navigation";
 import { getColorToken } from "@/lib/tokens";
 
 gsap.registerPlugin(ScrollTrigger);
 
 type QuickToFn = (value: number) => void;
+
+type LocalizedProject = Project & {
+  title: string;
+  category: string;
+  imageAlt: string;
+};
 
 function getPreviewOffset() {
   if (typeof document === "undefined") return { x: 32, y: -48 };
@@ -24,12 +31,20 @@ function getPreviewOffset() {
 }
 
 export default function FeaturedProjects() {
+  const t = useTranslations("projects");
   const sectionRef = useRef<HTMLElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
   const previewXToRef = useRef<QuickToFn | null>(null);
   const previewYToRef = useRef<QuickToFn | null>(null);
-  const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [activeProject, setActiveProject] = useState<LocalizedProject | null>(null);
   const { setHoveringProject, setHoveringLink } = useCursor();
+
+  const localizedProjects: LocalizedProject[] = projects.map((project) => ({
+    ...project,
+    title: t(`items.${project.slug}.title`),
+    category: t(`items.${project.slug}.category`),
+    imageAlt: t(`items.${project.slug}.imageAlt`),
+  }));
 
   useEffect(() => {
     return () => {
@@ -136,7 +151,7 @@ export default function FeaturedProjects() {
     previewYToRef.current?.(event.clientY + y);
   };
 
-  const handleRowEnter = (project: Project, event: MouseEvent<HTMLElement>) => {
+  const handleRowEnter = (project: LocalizedProject, event: MouseEvent<HTMLElement>) => {
     setActiveProject(project);
     setHoveringLink(false);
     setHoveringProject(true);
@@ -208,24 +223,24 @@ export default function FeaturedProjects() {
     >
       <div className="container-site">
         <div className="projects-intro projects-heading-block">
-          <p className="type-eyebrow">Proyectos</p>
+          <p className="type-eyebrow">{t("eyebrow")}</p>
           <h2 id="work-heading" className="type-projects-heading mt-6">
             <span className="block overflow-hidden">
               <span className="projects-heading-line block will-change-transform">
-                <span className="projects-heading-muted">Cada proyecto es</span>
-                {" una decisión."}
+                <span className="projects-heading-muted">{t("headingMuted")}</span>
+                {t("headingAccent")}
               </span>
             </span>
             <span className="block overflow-hidden">
               <span className="projects-heading-line block will-change-transform">
-                No solo una interfaz.
+                {t("headingSecond")}
               </span>
             </span>
           </h2>
         </div>
 
         <div className="projects-list">
-          {projects.map((project) => (
+          {localizedProjects.map((project) => (
             <article
               key={project.id}
               className="project-row group relative pointer-fine:cursor-none"
@@ -264,7 +279,7 @@ export default function FeaturedProjects() {
         aria-hidden="true"
         className="project-preview pointer-events-none fixed top-0 left-0 z-40 hidden overflow-hidden bg-preview-bg opacity-0 shadow-2xl pointer-fine:block"
       >
-        {projects.map((project) => (
+        {localizedProjects.map((project) => (
           <div
             key={project.id}
             className="absolute inset-0 overflow-hidden transition-opacity duration-300"

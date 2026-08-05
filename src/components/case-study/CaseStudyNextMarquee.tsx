@@ -1,11 +1,12 @@
 "use client";
 
 import gsap from "gsap";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
+import { Link } from "@/i18n/navigation";
 
 type CaseStudyNextMarqueeProps = {
-  href: string;
+  href: `/work/${string}`;
   label?: string;
   repeatCount?: number;
 };
@@ -15,9 +16,11 @@ const MARQUEE_DURATION = 28;
 
 export default function CaseStudyNextMarquee({
   href,
-  label = "Siguiente Caso",
+  label,
   repeatCount = DEFAULT_REPEAT_COUNT,
 }: CaseStudyNextMarqueeProps) {
+  const t = useTranslations("caseStudy");
+  const resolvedLabel = label ?? t("nextCase");
   const trackRef = useRef<HTMLDivElement>(null);
   const tweenRef = useRef<gsap.core.Tween | null>(null);
 
@@ -28,7 +31,7 @@ export default function CaseStudyNextMarquee({
         className="cs-next-marquee__item"
         aria-hidden={keyPrefix !== "a" || index > 0}
       >
-        {label}
+        {resolvedLabel}
       </span>
     ));
 
@@ -67,7 +70,7 @@ export default function CaseStudyNextMarquee({
       tweenRef.current?.kill();
       tweenRef.current = null;
     };
-  }, [label, repeatCount]);
+  }, [resolvedLabel, repeatCount]);
 
   const pauseMarquee = () => {
     tweenRef.current?.pause();
@@ -82,7 +85,7 @@ export default function CaseStudyNextMarquee({
       <Link
         href={href}
         className="cs-next-marquee"
-        aria-label={`${label}: ver proyecto`}
+        aria-label={`${t("nextCaseAria")}`}
         onMouseEnter={pauseMarquee}
         onMouseLeave={resumeMarquee}
         onFocus={pauseMarquee}

@@ -1,7 +1,7 @@
 "use client";
 
 import gsap from "gsap";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { useEffect, useLayoutEffect, useRef } from "react";
 
 const OVERLAY_ID = "page-transition";
@@ -17,6 +17,19 @@ function getOverlay() {
 
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+import { routing } from "@/i18n/routing";
+
+function stripLocalePrefix(pathname: string): string {
+  for (const locale of routing.locales) {
+    if (pathname === `/${locale}`) return "/";
+    if (pathname.startsWith(`/${locale}/`)) {
+      return pathname.slice(locale.length + 1) || "/";
+    }
+  }
+
+  return pathname;
 }
 
 function getInternalHref(anchor: HTMLAnchorElement, currentPath: string): string | null {
@@ -35,11 +48,12 @@ function getInternalHref(anchor: HTMLAnchorElement, currentPath: string): string
 
   if (url.origin !== window.location.origin) return null;
 
-  const next = `${url.pathname}${url.search}${url.hash}`;
+  const nextPath = stripLocalePrefix(url.pathname);
+  const next = `${nextPath}${url.search}${url.hash}`;
   const current = `${currentPath}${window.location.search}${window.location.hash}`;
 
   if (next === current) return null;
-  if (url.pathname === currentPath && url.hash) return null;
+  if (nextPath === currentPath && url.hash) return null;
 
   return next;
 }

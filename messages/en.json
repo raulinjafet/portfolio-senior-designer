@@ -1,0 +1,103 @@
+{
+  "metadata": {
+    "title": "Raulyn Ladera — Senior Product Designer",
+    "description": "Digital product design where exceptional aesthetics, scientific usability, and technical performance work in perfect sync.",
+    "ogAlt": "Raulyn Ladera — Senior Product Designer",
+    "siteName": "Raulyn Ladera Portfolio"
+  },
+  "header": {
+    "brand": "I'm Raulyn Ladera. 🇻🇪",
+    "homeAria": "Raulyn Ladera — Home",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "nav": {
+      "home": "Home",
+      "projects": "Projects",
+      "cv": "CV",
+      "contact": "Contact me"
+    }
+  },
+  "localeSwitcher": {
+    "label": "Language",
+    "es": "ES",
+    "en": "EN"
+  },
+  "hero": {
+    "ariaLabel": "Introduction",
+    "eyebrow": "Product & Design System Designer.",
+    "titleFull": "I build design systems and visual experiences that connect people with the business.",
+    "titleLines": [
+      "I build design systems",
+      "and visual experiences that",
+      "connect people with the business."
+    ],
+    "metrics": {
+      "experience": "years of experience",
+      "projects": "projects delivered"
+    },
+    "body": "Combining strategy, intuitive interfaces, and team leadership to turn complex ideas into high-impact digital products."
+  },
+  "about": {
+    "eyebrow": "About me",
+    "titleLines": [
+      { "text": "My constant focus:", "accent": true },
+      { "text": "refine, structure,", "accent": false },
+      { "text": "and lead tomorrow's design.", "accent": false }
+    ],
+    "skills": [
+      "Product Design",
+      "Adobe Suite",
+      "Design System",
+      "Visual Design",
+      "Leadership",
+      "Figma"
+    ],
+    "portraitAlt": "Raulyn Ladera working in an outdoor space",
+    "teamAlt": "Design team at Qik",
+    "bio": "Throughout my career, I've built experience leading product teams and scaling effective design systems. I approach every project by connecting real user needs with strategic business goals, turning complexity into intuitive, memorable interfaces."
+  },
+  "projects": {
+    "eyebrow": "Projects",
+    "headingMuted": "Every project is",
+    "headingAccent": " a decision.",
+    "headingSecond": "Not just an interface.",
+    "items": {
+      "disenar-claridad-desde-cero": {
+        "title": "Designing clarity from scratch.",
+        "category": "Product · Identity · Systems",
+        "imageAlt": "Design system interface with UI components and color tokens"
+      },
+      "cobalt-design-system": {
+        "title": "Cobalt Design System.",
+        "category": "System · Scalability",
+        "imageAlt": "Cobalt design system with scalable components"
+      },
+      "designops-en-qik": {
+        "title": "DesignOps at Qik.",
+        "category": "Design · Operations · Process",
+        "imageAlt": "Design team collaborating on a DesignOps workflow at Qik"
+      }
+    }
+  },
+  "contact": {
+    "eyebrow": "Let's build something together?",
+    "title": "I lead design, structure systems, and elevate your digital product.",
+    "downloadCv": "Download CV",
+    "contactMe": "Contact me"
+  },
+  "footer": {
+    "homeAria": "Raulyn Ladera — Home",
+    "copyright": "© 2026 – Raulyn Ladera",
+    "nav": {
+      "home": "Home",
+      "projects": "Projects",
+      "cv": "CV",
+      "linkedin": "LinkedIn",
+      "contact": "Contact me"
+    }
+  },
+  "caseStudy": {
+    "nextCase": "Next Case",
+    "nextCaseAria": "Next Case: view project"
+  }
+}
