@@ -1,12 +1,29 @@
 import type { Metadata } from "next";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import DesignOpsEnQikCaseStudy from "@/components/case-study/designops-en-qik/DesignOpsEnQikCaseStudy";
+import { routing, type AppLocale } from "@/i18n/routing";
 
-export const metadata: Metadata = {
-  title: "Optimización de la arquitectura de Figma — Raulyn Ladera",
-  description:
-    "Caso de estudio sobre DesignOps en Qik: reorganización de Figma, handoff técnico estandarizado y arquitectura adoptada por todo el equipo de diseño.",
+type PageProps = {
+  params: Promise<{ locale: string }>;
 };
 
-export default function DesignOpsEnQikPage() {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "caseStudies.designops.metadata" });
+
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export default async function DesignOpsEnQikPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale as AppLocale);
+
   return <DesignOpsEnQikCaseStudy />;
 }

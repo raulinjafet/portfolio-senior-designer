@@ -1,0 +1,212 @@
+{
+  "claridad": {
+    "metadata": {
+      "title": "Transformando identidad visual — Raulyn Ladera",
+      "description": "Caso de estudio sobre la definición del look & feel de la App Qik Banco Digital: identidad visual, principios de diseño y experiencia bancaria accesible."
+    },
+    "hero": {
+      "badge": "Producto · Identidad · Sistemas",
+      "title": "Transformando identidad visual en una experiencia humana y usable."
+    },
+    "labels": {
+      "challenge": "El desafío",
+      "summary": "Resumen del proyecto.",
+      "principlesSection": "Principios detrás del look & feel",
+      "principlesLabel": "estética funcional",
+      "impactSection": "El trabajo en el look & feel no partió de mejorar algo existente, sino de construir desde cero una experiencia bancaria clara, moderna y accesible.",
+      "impactLabel": "Decisiones de diseño",
+      "learning": "El aprendizaje"
+    },
+    "challengeParagraphs": [
+      "Sin producto, sin identidad definida y con una marca blanca como único punto de partida, tuve que diseñar la experiencia bancaria de Qik desde cero.",
+      "Mi rol nació enfocado en UI, pero la falta de una dirección visual clara me llevó a asumir la definición completa del look & feel — mientras el producto, el equipo y las expectativas crecían al mismo tiempo.",
+      "El reto no era solo visual: había que construir una experiencia accesible, rápida y sencilla, capaz de bancarizar a personas que el sistema financiero tradicional nunca había alcanzado."
+    ],
+    "summaryCards": [
+      { "id": "role", "label": "Rol", "value": "UI Design Senior", "accent": true },
+      { "id": "tools", "label": "Herramientas", "value": "Figma", "accent": false },
+      { "id": "duration", "label": "Duración", "value": "+4 año y continuamos.", "accent": false },
+      { "id": "principles", "label": "Principios", "value": "Confianza · Modernidad · Simplicidad", "accent": false },
+      { "id": "product", "label": "Producto", "value": "App Qik Banco Digital", "accent": false },
+      { "id": "keyResult", "label": "Resultado clave", "value": "Una base que evolucionó a Cobalt Design System", "accent": true }
+    ],
+    "principlesIntro": "El look & feel se construyó a partir de principios claros:",
+    "principlesItems": [
+      "Jerarquía visual para facilitar la lectura y navegación.",
+      "Contraste y uso del color para guiar la atención.",
+      "Spacing consistente para crear aire y claridad.",
+      "Patrones repetibles que redujeran fricción cognitiva."
+    ],
+    "principlesClosing": "Busqué que la aplicación transmitiera Confianza, Modernidad, Simplicidad. Qik debía sentirse ligera, accesible y diferente a la experiencia bancaria tradicional.",
+    "gridCaptions": {
+      "loader": "Se diseñó una interfaz limpia e intuitiva; para garantizar la usabilidad, con algo claro en mente, estamos diseñando un banco.",
+      "animations": "Se aplicaron animaciones y microinteracciones en puntos claves para asegurar menos ansiedad."
+    },
+    "gridAlts": {
+      "loader": "Pantalla de tarjeta de crédito en la app Qik",
+      "credits": "Reconocimientos del diseño de Qik"
+    },
+    "impactSectionTitle": "El trabajo en el look & feel no partió de mejorar algo existente, sino de construir desde cero una experiencia bancaria clara, moderna y accesible.",
+    "impactLabel": "Decisiones de diseño",
+    "impactParagraphs": [
+      "A través de decisiones visuales como jerarquía tipográfica, contraste, spacing y patrones repetibles, el producto logró transmitir una sensación de confianza y simplicidad desde el primer contacto.",
+      "El equipo comenzó a trabajar con mayor claridad y seguridad visual, mientras que la aplicación empezó a destacar por su limpieza y coherencia.",
+      "En redes sociales y conversaciones con usuarios, uno de los comentarios más recurrentes ha sido cómo Qik se siente sencilla, intuitiva y diferente a la banca tradicional."
+    ],
+    "impactLead": "Más que una interfaz, el diseño ayudó a crear una experiencia usable donde lo visual guía naturalmente la interacción.",
+    "learningTitle": "Ver la aplicación funcionando por primera vez durante el evento de lanzamiento es un momento difícil de describir.",
+    "learningParagraphs": [
+      "Sentí una mezcla de orgullo y emoción al ver algo que comenzó como ideas y decisiones visuales convertirse en una herramienta real que impacta la vida de miles de personas.",
+      "Más allá del sistema o la estructura, lo que más me llena es escuchar que Qik se percibe simple, clara y bien pensada. Saber que algo que diseñé hoy forma parte del día a día de los usuarios dominicanos me recuerda por qué hago lo que hago."
+    ],
+    "learningLead": "Para mí, el diseño cobra sentido cuando deja de ser solo una pantalla y se convierte en una experiencia que las personas realmente usan y valoran."
+  },
+  "cobalt": {
+    "metadata": {
+      "title": "Cobalt Design System. — Raulyn Ladera",
+      "description": "Caso de estudio sobre el diseño y documentación de Cobalt: un sistema basado en design tokens y atomic design para escalar Qik Banco Digital."
+    },
+    "hero": {
+      "badge": "Cobalt Design System",
+      "title": "Sistema de diseño atómico con design tokens, enfocado en escalabilidad y consistencia."
+    },
+    "labels": {
+      "challenge": "El desafío",
+      "summary": "Resumen del proyecto.",
+      "principlesSection": "Pensamos en escalabilidad funcional.",
+      "principlesLabel": "El sistema",
+      "impactSection": "La implementación de Cobalt transformó la forma en que el equipo trabaja.",
+      "impactLabel": "El impacto",
+      "learning": "El aprendizaje"
+    },
+    "challengeParagraphs": [
+      "Qik tenía un UI Kit, no un sistema. Cada diseñador decidía por su cuenta, los componentes se recreaban desde cero y el lenguaje entre diseño y desarrollo no estaba alineado.",
+      "El resultado de todo esto se traducía en inconsistencia, retrabajo y una colaboración limitada entre equipos.",
+      "Escalar el producto exigía crear un sistema, no seguir trabajando sobre un guideline / UI Kit."
+    ],
+    "summaryCards": [
+      { "id": "role", "label": "Rol", "value": "Design System Lead", "accent": true },
+      { "id": "tools", "label": "Herramientas", "value": "Figma · Jira · Confluence", "accent": false },
+      { "id": "duration", "label": "Duración", "value": "+1 años y continuamos.", "accent": false },
+      { "id": "principles", "label": "Principios", "value": "Gobernanza · Design Tokens · Atomic Design", "accent": false },
+      { "id": "enabler", "label": "Habilitador de", "value": "Themes · Modes · Colaboración Design → DEV", "accent": false },
+      { "id": "keyResult", "label": "Resultado clave", "value": "+100% velocidad en Design → DEV", "accent": true }
+    ],
+    "systemIntro": "Cobalt fue diseñado bajo dos principios clave:",
+    "principlesItems": [
+      "Design Tokens como lenguaje compartido entre diseño y desarrollo.",
+      "Atomic Design como teoría para estructurar componentes y patrones de forma escalable."
+    ],
+    "systemClosing": "El objetivo no era solo consistencia visual, sino eficiencia operativa y escalabilidad técnica.",
+    "gridCaptions": {
+      "spacing": "Se definieron los tokens de forma clara, desde el color hasta los valores que se usan en los gap.",
+      "colors": "Creación y agrupación de tokens de color como globales, alias y específicos para poder activar themes y modes que se quieran."
+    },
+    "gridAlts": {
+      "spacing": "Tokens de espaciado en Cobalt",
+      "colors": "Tokens de color globales, alias y específicos",
+      "icons": "Grid de iconografía del sistema Cobalt"
+    },
+    "showcaseAlt": "Fundamentos del Design Language System Cobalt",
+    "alignmentSectionTitle": "Uno de los mayores cambios fue alinear diseño y desarrollo bajo un mismo lenguaje.",
+    "alignmentLabel": "Alineación",
+    "alignmentParagraphs": [
+      "Trabajé directamente con líderes de arquitectura y frontend para validar la visión del sistema — mejorando la velocidad de implementación, el mantenimiento del producto y la claridad técnica.",
+      "Hoy, ambos equipos comparten conceptos como tokens, componentes y patrones, lo que redujo la fricción y mejoró la comunicación.",
+      "La sólida implementación de estos fundamentos fue, de hecho, lo que nos permitió escalar el ecosistema para lanzar nuevos productos como Qik Pro, soportando variaciones visuales complejas mediante la creación de un nuevo Theme Pro nativo gracias a la arquitectura basada en tokens."
+    ],
+    "impactSectionTitle": "La implementación de Cobalt transformó la forma en que el equipo trabaja.",
+    "impactLabel": "El impacto",
+    "impactItems": [
+      "Incremento superior al 100% en velocidad de equipos de diseño y desarrollo.",
+      "−30% en bugs de UI durante regresiones.",
+      "Consistencia y coherencia visual en la app.",
+      "Onboarding más rápido para nuevos diseñadores.",
+      "Mayor alineación entre diseño y desarrollo."
+    ],
+    "impactIntro": "Nada valida mejor la decisión de crear un design system que la voz del equipo técnico que lo implementa:",
+    "quote": "Sin tokens, Qik Pro no hubiese sido posible.",
+    "quoteAuthor": "Justin Colón – Líder de Front-End",
+    "learningTitle": "Construir Cobalt cambió mi perspectiva como diseñador.",
+    "learningParagraphs": [
+      "Entendí que el verdadero impacto no está en una interfaz aislada, sino en crear estructuras que permitan que el diseño evolucione junto al producto y el negocio.",
+      "Hoy, ver cómo el sistema es adoptado por diseñadores, developers y líderes dentro del banco es una de las mayores satisfacciones de mi carrera."
+    ]
+  },
+  "designops": {
+    "metadata": {
+      "title": "Optimización de la arquitectura de Figma — Raulyn Ladera",
+      "description": "Caso de estudio sobre DesignOps en Qik: reorganización de Figma, handoff técnico estandarizado y arquitectura adoptada por todo el equipo de diseño."
+    },
+    "hero": {
+      "badge": "DesignOps · Workflow",
+      "title": "Optimización de la arquitectura de Figma y del handoff técnico del equipo."
+    },
+    "labels": {
+      "challenge": "El desafío",
+      "summary": "Resumen del proyecto.",
+      "structureSection": "Estructurar para nuestra realidad.",
+      "structureLabel": "Sistema estructural",
+      "decisionsSection": "Pensado para que cualquiera encuentre lo que busca.",
+      "decisionsLabel": "Decisiones de diseño",
+      "impactSection": "La nueva estructura no cambió lo que diseñamos, cambió cómo lo encontramos y cómo lo entregamos.",
+      "impactLabel": "El impacto",
+      "learning": "El aprendizaje"
+    },
+    "challengeParagraphs": [
+      "Nuestro Figma estaba organizado por squads (Cafeína Team, Dulcito de Coco, Feeling Box...), pero el producto había crecido y los diseñadores colaboraban constantemente entre squads distintos.",
+      "El resultado: historias de usuario documentadas en archivos que no correspondían. Una historia del squad de Cafeína Team terminó en el archivo de otro squad, simplemente porque quien la ejecutó pertenecía a un equipo distinto — y encontrarla después se volvió tedioso.",
+      "Esto no era solo desorden: nos restaba velocidad y descubribilidad en el día a día de todo el equipo de diseño."
+    ],
+    "summaryCards": [
+      { "id": "role", "label": "Rol", "value": "Design Ops Lead", "accent": true },
+      { "id": "tools", "label": "Herramientas", "value": "Figma · Jira", "accent": false },
+      { "id": "duration", "label": "Duración", "value": "3 meses", "accent": false },
+      { "id": "teams", "label": "Equipos involucrados", "value": "Diseño · Desarrollo · Product Owner", "accent": false },
+      { "id": "scope", "label": "Alcance", "value": "Reorganización completa de Qik en Figma", "accent": false },
+      { "id": "keyResult", "label": "Resultado clave", "value": "Estructura estandarizada, adoptada por todo el equipo de diseño", "accent": true }
+    ],
+    "structureSectionTitle": "Estructurar para nuestra realidad.",
+    "structureLabel": "Sistema estructural",
+    "structureIntro": "Propusimos una arquitectura de cinco niveles, adaptada a la realidad de Qik:",
+    "structureItems": [
+      "Organización — todos los colaboradores invitados; diseñadores con permisos de edición, el resto con permisos de solo vista.",
+      "Equipos — agrupados por función real: Productos, Handover, Marketing, Design System, DesignOps y Vendors.",
+      "Proyectos — un espacio por cada producto, funcionalidad core o colaboración externa.",
+      "Archivos — los flujos específicos de cada producto o funcionalidad, con nomenclatura basada en siglas de equipo y feature.",
+      "Páginas — cada archivo dividido en UI Team, UX Team e Información del archivo (handover, cover)."
+    ],
+    "structureClosing": "No existe una única forma \"correcta\" de estructurar Figma — la clave fue adaptar la arquitectura recomendada a cómo Qik realmente trabaja.",
+    "gridCaptions": {
+      "organization": "Todos colaboran dentro de Figma, sin embargo existen reglas para el equipo de Product que son lo que velan por mantener este software organizado.",
+      "projects": "Para garantizar una buena organización se propuso crear los proyectos basados en funcionalidades, producto y equipos externos al de Product Design."
+    },
+    "gridAlts": {
+      "diagram": "Diagrama de puntos de organización en Figma",
+      "nomenclature": "Nomenclatura de páginas y archivos en Figma",
+      "fileList": "Lista de archivos organizados en Figma",
+      "orgProjects": "Organización de proyectos y archivos en Figma"
+    },
+    "showcaseAlt": "Estructura visual de archivos Figma en Qik",
+    "decisionsSectionTitle": "Pensado para que cualquiera encuentre lo que busca.",
+    "decisionsLabel": "Decisiones de diseño",
+    "decisionsParagraphs": [
+      "Cada archivo se dividió en carpetas claras: UI Team, UX Team y la información necesaria para el traspaso a desarrollo.",
+      "Del lado de UI: exploraciones, el flujo aprobado (UI Check), prototipos y un archivo de descartados para no perder el histórico de decisiones. Del lado de UX: wireframes y benchmark. Y en ambos, una sección de Handover Info y un Cover con título, descripción y fecha — para que cualquier diseñador, nuevo o no, entienda el archivo sin tener que preguntar."
+    ],
+    "impactSectionTitle": "La nueva estructura no cambió lo que diseñamos, cambió cómo lo encontramos y cómo lo entregamos.",
+    "impactLabel": "El impacto",
+    "impactItems": [
+      "Menos tiempo perdido buscando archivos o flujos mal ubicados.",
+      "Rituales claros de colaboración con desarrollo: planning, refinamiento y evidencia centralizada en RFD y Jira.",
+      "Handover estandarizado — cualquier diseñador puede tomar un archivo y entender su estado.",
+      "Una base que se prueba, se itera y se ajusta con feedback real del equipo, no una regla fija."
+    ],
+    "impactQuote": "Más que una carpeta bien nombrada, esto le dio al equipo un lenguaje común para trabajar.",
+    "learningTitle": "Ordenar Figma me enseñó que la estructura no es burocracia — es lo que le da velocidad real a un equipo que crece.",
+    "learningParagraphs": [
+      "Antes de esto, pensaba que \"organizar archivos\" era una tarea menor comparada con diseñar pantallas. Hoy sé que es al revés: sin una base ordenada, cada pantalla nueva cuesta más de lo que debería.",
+      "La parte más valiosa no fue definir la estructura, sino lograr que el equipo la adoptara como su forma natural de trabajar."
+    ]
+  }
+}
