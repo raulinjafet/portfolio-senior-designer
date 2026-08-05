@@ -8,6 +8,7 @@ import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
 import PageTransition from "@/components/motion/PageTransition";
 import SmoothScroll from "@/components/common/SmoothScroll";
+import { getLocaleAlternates, getLocalizedUrl, SITE_URL } from "@/i18n/metadata";
 import { routing, type AppLocale } from "@/i18n/routing";
 import "@/styles/globals.css";
 
@@ -35,13 +36,14 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "metadata" });
 
   return {
-    metadataBase: new URL("https://raulynladera.vercel.app"),
+    metadataBase: new URL(SITE_URL),
     title: t("title"),
     description: t("description"),
+    alternates: getLocaleAlternates(locale),
     openGraph: {
       title: t("title"),
       description: t("description"),
-      url: `https://raulynladera.vercel.app/${locale}`,
+      url: getLocalizedUrl(locale),
       siteName: t("siteName"),
       images: [
         {
@@ -52,6 +54,7 @@ export async function generateMetadata({
         },
       ],
       locale: locale === "es" ? "es_DO" : "en_US",
+      alternateLocale: locale === "es" ? ["en_US"] : ["es_DO"],
       type: "website",
     },
   };
