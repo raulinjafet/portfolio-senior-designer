@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { routing } from "./routing";
 
-export const SITE_URL = "https://raulynladera.vercel.app";
+export const SITE_URL = "https://www.raulyn.com";
 
 function normalizePathname(pathname: string): string {
   if (!pathname || pathname === "/") return "";
