@@ -4,7 +4,8 @@ import RaulynLogotype from "@/components/common/RaulynLogotype";
 import { Link } from "@/i18n/navigation";
 
 const EMAIL = "raulin534@gmail.com";
-const LINKEDIN_URL = "https://www.linkedin.com/in/raulyn-ladera/";
+const LINKEDIN_URL =
+  "https://www.linkedin.com/in/raulyn-ladera/?originalSubdomain=co";
 
 const footerLinkClassName =
   "type-footer-link inline-block transition-colors duration-300 ease-out hover:text-primary";
