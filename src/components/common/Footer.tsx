@@ -1,9 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import Magnetic from "@/components/motion/Magnetic";
 import RaulynLogotype from "@/components/common/RaulynLogotype";
+import { CONTACT_EMAIL } from "@/constants/contact";
 import { Link } from "@/i18n/navigation";
-
-const EMAIL = "raulin534@gmail.com";
 const LINKEDIN_URL =
   "https://www.linkedin.com/in/raulyn-ladera/?originalSubdomain=co";
 
@@ -18,7 +17,7 @@ export default async function Footer() {
     { label: t("nav.projects"), href: "/#work" as const },
     { label: t("nav.cv"), href: "/cv.pdf", external: true as const },
     { label: t("nav.linkedin"), href: LINKEDIN_URL, external: true as const },
-    { label: t("nav.contact"), href: `mailto:${EMAIL}` },
+    { label: t("nav.contact"), href: `mailto:${CONTACT_EMAIL}` },
   ];
 
   return (

@@ -7,9 +7,8 @@ import avatarImage from "@/assets/raulyn-avatar.png";
 import HeaderMenuIcon from "@/components/common/HeaderMenuIcon";
 import LocaleSwitcher from "@/components/common/LocaleSwitcher";
 import Magnetic from "@/components/motion/Magnetic";
+import { CONTACT_EMAIL } from "@/constants/contact";
 import { Link } from "@/i18n/navigation";
-
-const EMAIL = "raulin534@gmail.com";
 const SCROLL_TOP_THRESHOLD = 20;
 
 type AppScrollDetail = {
@@ -55,7 +54,7 @@ export default function Header() {
 
   const mobileNavLinks = [
     ...navLinks,
-    { label: t("nav.contact"), href: `mailto:${EMAIL}` },
+    { label: t("nav.contact"), href: `mailto:${CONTACT_EMAIL}` },
   ];
 
   useEffect(() => {
@@ -206,7 +205,7 @@ export default function Header() {
               <LocaleSwitcher />
 
               <Magnetic>
-                <a href={`mailto:${EMAIL}`} className="btn btn-secondary-sm">
+                <a href={`mailto:${CONTACT_EMAIL}`} className="btn btn-secondary-sm">
                   {t("nav.contact")}
                 </a>
               </Magnetic>

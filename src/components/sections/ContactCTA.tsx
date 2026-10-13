@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 import { useRef } from "react";
+import { CONTACT_EMAIL } from "@/constants/contact";
 import Magnetic from "@/components/motion/Magnetic";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -67,7 +68,7 @@ export default function ContactCTA() {
           </Magnetic>
 
           <Magnetic>
-            <a href="mailto:raulin534@gmail.com" className="btn btn-tertiary-lg">
+            <a href={`mailto:${CONTACT_EMAIL}`} className="btn btn-tertiary-lg">
               {t("contactMe")}
             </a>
           </Magnetic>
