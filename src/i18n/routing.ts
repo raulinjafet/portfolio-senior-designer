@@ -5,7 +5,7 @@ export type AppLocale = (typeof locales)[number];
 
 export const routing = defineRouting({
   locales,
-  defaultLocale: "es",
+  defaultLocale: "en",
   localePrefix: "always",
 });
 

@@ -77,5 +77,5 @@ export function detectLocale(request: NextRequest): AppLocale {
   );
   if (acceptLanguage) return acceptLanguage;
 
-  return "es";
+  return "en";
 }
