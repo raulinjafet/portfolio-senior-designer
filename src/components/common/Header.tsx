@@ -8,7 +8,7 @@ import HeaderMenuIcon from "@/components/common/HeaderMenuIcon";
 import LocaleSwitcher from "@/components/common/LocaleSwitcher";
 import Magnetic from "@/components/motion/Magnetic";
 import { CONTACT_EMAIL } from "@/constants/contact";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 const SCROLL_TOP_THRESHOLD = 20;
 
 type AppScrollDetail = {
@@ -39,6 +39,7 @@ function getHeaderTheme(): HeaderTheme {
 
 export default function Header() {
   const t = useTranslations("header");
+  const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
   const [showGlass, setShowGlass] = useState(false);
   const [headerTheme, setHeaderTheme] = useState<HeaderTheme>("default");
@@ -75,6 +76,10 @@ export default function Header() {
       document.body.style.overflow = "";
     };
   }, [menuOpen]);
+
+  useEffect(() => {
+    closeMenu();
+  }, [pathname, closeMenu]);
 
   useEffect(() => {
     const updateHeader = (scroll: number, direction: number) => {
