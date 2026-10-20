@@ -49,11 +49,14 @@ function getInternalHref(anchor: HTMLAnchorElement, currentPath: string): string
   if (url.origin !== window.location.origin) return null;
 
   const nextPath = stripLocalePrefix(url.pathname);
+
+  // Same route (e.g. /#work → / or / → /#work): let the browser handle hash/scroll.
+  if (nextPath === currentPath) return null;
+
   const next = `${nextPath}${url.search}${url.hash}`;
   const current = `${currentPath}${window.location.search}${window.location.hash}`;
 
   if (next === current) return null;
-  if (nextPath === currentPath && url.hash) return null;
 
   return next;
 }
@@ -171,20 +174,28 @@ export default function PageTransition() {
   useEffect(() => {
     if (!readyRef.current) return;
     if (prefersReducedMotion()) return;
-    if (previousPathnameRef.current === pathname) return;
 
+    const pathChanged = previousPathnameRef.current !== pathname;
     previousPathnameRef.current = pathname;
 
-    if (pendingNavigationRef.current) {
-      requestAnimationFrame(() => reveal());
+    if (pathChanged) {
+      if (pendingNavigationRef.current) {
+        requestAnimationFrame(() => reveal());
+        return;
+      }
+
+      if (isAnimatingRef.current) return;
+
+      cover(() => {
+        requestAnimationFrame(() => reveal());
+      });
       return;
     }
 
-    if (isAnimatingRef.current) return;
-
-    cover(() => {
+    // Navigation was intercepted but pathname did not change (edge case): unblock overlay.
+    if (pendingNavigationRef.current || isAnimatingRef.current) {
       requestAnimationFrame(() => reveal());
-    });
+    }
   }, [pathname]);
 
   useEffect(() => {
