@@ -99,6 +99,9 @@
   },
   "caseStudy": {
     "nextCase": "Siguiente Caso",
-    "nextCaseAria": "Siguiente Caso: ver proyecto"
+    "nextCaseAria": "Siguiente Caso: ver proyecto",
+    "videoLabel": "Video del caso de estudio",
+    "videoPlay": "Reproducir video",
+    "videoPause": "Pausar video"
   }
 }

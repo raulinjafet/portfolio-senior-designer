@@ -99,6 +99,9 @@
   },
   "caseStudy": {
     "nextCase": "Next Case",
-    "nextCaseAria": "Next Case: view project"
+    "nextCaseAria": "Next Case: view project",
+    "videoLabel": "Case study video",
+    "videoPlay": "Play video",
+    "videoPause": "Pause video"
   }
 }
