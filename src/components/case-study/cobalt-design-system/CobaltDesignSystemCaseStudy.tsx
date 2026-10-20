@@ -44,6 +44,7 @@ export default function CobaltDesignSystemCaseStudy() {
           <CaseStudyVideo
             src={`${ASSET_BASE}/video-design-system.mp4`}
             type="video/mp4"
+            poster={`${ASSET_BASE}/hero-video-poster.png`}
           />
         </div>
       </section>
@@ -143,6 +144,7 @@ export default function CobaltDesignSystemCaseStudy() {
                 <CaseStudyVideo
                   src={`${ASSET_BASE}/video-grid-dls.mp4`}
                   type="video/mp4"
+                  poster={`${ASSET_BASE}/image-spacing-tokens.png`}
                 />
               </div>
             </div>
@@ -204,6 +206,7 @@ export default function CobaltDesignSystemCaseStudy() {
             <CaseStudyVideo
               src={`${ASSET_BASE}/video-change-pro-tokens.mp4`}
               type="video/mp4"
+              poster={`${ASSET_BASE}/video-change-pro-tokens-poster.png`}
             />
           </div>
         </div>

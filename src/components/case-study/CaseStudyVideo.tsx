@@ -7,41 +7,48 @@ type CaseStudyVideoProps = {
   src: string;
   type: "video/webm" | "video/mp4";
   className?: string;
+  poster?: string;
 };
 
 export default function CaseStudyVideo({
   src,
   type,
   className = "cs-case-video",
+  poster,
 }: CaseStudyVideoProps) {
   const t = useTranslations("caseStudy");
+  const wrapRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const userPausedRef = useRef(false);
-  const [isPaused, setIsPaused] = useState(false);
+  const programmaticPauseRef = useRef(false);
+  const [inView, setInView] = useState(false);
+  const [isPaused, setIsPaused] = useState(true);
+
+  useEffect(() => {
+    const root = wrapRef.current;
+    if (!root) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+      },
+      { threshold: 0.2, rootMargin: "0px 0px 5% 0px" },
+    );
+
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    const autoplayOnce = async () => {
-      if (userPausedRef.current) return;
-
-      try {
-        await video.play();
-        setIsPaused(false);
-      } catch {
-        setIsPaused(true);
-      }
-    };
-
-    if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
-      void autoplayOnce();
-    } else {
-      video.addEventListener("canplay", () => void autoplayOnce(), { once: true });
-    }
-
     const onPause = () => {
       if (document.visibilityState === "hidden") return;
+      if (programmaticPauseRef.current) {
+        setIsPaused(true);
+        return;
+      }
       if (!video.ended) userPausedRef.current = true;
       setIsPaused(true);
     };
@@ -73,6 +80,37 @@ export default function CaseStudyVideo({
     };
   }, []);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (!inView) {
+      programmaticPauseRef.current = true;
+      video.pause();
+      programmaticPauseRef.current = false;
+      setIsPaused(true);
+      return;
+    }
+
+    if (userPausedRef.current) return;
+
+    const playInView = async () => {
+      try {
+        await video.play();
+        setIsPaused(false);
+      } catch {
+        setIsPaused(true);
+      }
+    };
+
+    if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+      void playInView();
+    } else {
+      video.addEventListener("canplay", () => void playInView(), { once: true });
+      video.load();
+    }
+  }, [inView]);
+
   const togglePlayback = () => {
     const video = videoRef.current;
     if (!video) return;
@@ -91,13 +129,14 @@ export default function CaseStudyVideo({
     className === "cs-case-video" ? "cs-case-video" : `cs-case-video ${className}`;
 
   return (
-    <div className="cs-case-video-wrap">
+    <div ref={wrapRef} className="cs-case-video-wrap">
       <video
         ref={videoRef}
         className={videoClassName}
         muted
         playsInline
-        preload="metadata"
+        preload="none"
+        poster={poster}
         aria-label={t("videoLabel")}
       >
         <source src={src} type={type} />

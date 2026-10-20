@@ -44,6 +44,7 @@ export default function DesignOpsEnQikCaseStudy() {
           <CaseStudyVideo
             src={`${ASSET_BASE}/hero-figma-org.mp4`}
             type="video/mp4"
+            poster={`${ASSET_BASE}/hero-figma-org.png`}
           />
         </div>
       </section>

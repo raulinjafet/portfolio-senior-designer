@@ -44,6 +44,7 @@ export default function DisenarClaridadCaseStudy() {
             src={`${ASSET_BASE}/hero-video.webm`}
             type="video/webm"
             className="cs-claridad-video"
+            poster={`${ASSET_BASE}/hero-video.png`}
           />
         </div>
       </section>
@@ -89,6 +90,7 @@ export default function DisenarClaridadCaseStudy() {
               src={`${ASSET_BASE}/showcase-app.webm`}
               type="video/webm"
               className="cs-claridad-video"
+              poster={`${ASSET_BASE}/showcase-app.png`}
             />
           </div>
         </div>
@@ -146,6 +148,7 @@ export default function DisenarClaridadCaseStudy() {
                   src={`${ASSET_BASE}/principles-grid.webm`}
                   type="video/webm"
                   className="cs-claridad-video"
+                  poster={`${ASSET_BASE}/principles-loader.png`}
                 />
               </div>
             </div>
@@ -157,6 +160,7 @@ export default function DisenarClaridadCaseStudy() {
                     src={`${ASSET_BASE}/principles-social.mp4`}
                     type="video/mp4"
                     className="cs-claridad-video"
+                    poster={`${ASSET_BASE}/principles-loader.png`}
                   />
                 </div>
               </div>

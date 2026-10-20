@@ -127,7 +127,7 @@ export default function About() {
 
           <div className="about-portrait-wrap about-media">
             <Image
-              src="/home/about-portrait.jpg"
+              src="/home/about-portrait.avif"
               alt={t("portraitAlt")}
               fill
               className="about-portrait-img"
