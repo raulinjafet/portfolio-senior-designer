@@ -14,8 +14,20 @@ function pathnameHasLocale(pathname: string) {
   );
 }
 
+const nonLocalizedPrefixes = ["/casa-creativa", "/api/casa-creativa"];
+
+function isNonLocalizedRoute(pathname: string) {
+  return nonLocalizedPrefixes.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
+}
+
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (isNonLocalizedRoute(pathname)) {
+    return NextResponse.next();
+  }
 
   if (!pathnameHasLocale(pathname)) {
     const locale = detectLocale(request);
