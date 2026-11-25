@@ -22,8 +22,26 @@ function isNonLocalizedRoute(pathname: string) {
   );
 }
 
+/** Old links after locale prefix (e.g. /es/casa-creativa/kickoff) → canonical path */
+function getCasaCreativaRedirectPath(pathname: string): string | null {
+  for (const locale of routing.locales) {
+    const prefix = `/${locale}/casa-creativa`;
+    if (pathname === prefix || pathname.startsWith(`${prefix}/`)) {
+      return pathname.slice(`/${locale}`.length);
+    }
+  }
+  return null;
+}
+
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  const casaRedirect = getCasaCreativaRedirectPath(pathname);
+  if (casaRedirect) {
+    const url = request.nextUrl.clone();
+    url.pathname = casaRedirect;
+    return NextResponse.redirect(url, 308);
+  }
 
   if (isNonLocalizedRoute(pathname)) {
     return NextResponse.next();

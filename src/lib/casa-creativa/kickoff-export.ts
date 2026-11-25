@@ -2,7 +2,7 @@ import ExcelJS from "exceljs";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import {
   formatAnswerValue,
-  kickoffQuestionLabels,
+  getKickoffExportLabels,
   type KickoffAnswers,
 } from "@/data/casa-creativa-kickoff";
 
@@ -43,7 +43,7 @@ export async function buildKickoffWorkbook(answers: KickoffAnswers): Promise<Buf
     fgColor: { argb: "FFF3E8DC" },
   };
 
-  for (const { id, label } of kickoffQuestionLabels) {
+  for (const { id, label } of getKickoffExportLabels(answers)) {
     sheet.addRow({
       question: label,
       answer: formatAnswerValue(answers[id]),
@@ -120,7 +120,7 @@ export async function buildKickoffPdf(answers: KickoffAnswers): Promise<Buffer> 
   );
   y -= 12;
 
-  for (const { id, label } of kickoffQuestionLabels) {
+  for (const { id, label } of getKickoffExportLabels(answers)) {
     const answer = formatAnswerValue(answers[id]);
     drawLine(label, true, 10);
     drawLine(answer, false, 10);

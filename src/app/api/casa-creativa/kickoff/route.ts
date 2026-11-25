@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 import {
   formatAnswerValue,
   KICKOFF_NOTIFY_EMAILS,
@@ -10,8 +9,17 @@ import {
   buildKickoffWorkbook,
 } from "@/lib/casa-creativa/kickoff-export";
 import {
+  decodeAttachmentPayload,
+  validateAttachmentPayloads,
+} from "@/lib/casa-creativa/kickoff-attachments";
+import {
+  isKickoffEmailConfigured,
+  sendKickoffEmail,
+} from "@/lib/casa-creativa/send-kickoff-email";
+import {
   kickoffPayloadSchema,
   validateKickoffAnswers,
+  withAttachmentAnswerSummary,
 } from "@/lib/casa-creativa/kickoff-validate";
 
 export const runtime = "nodejs";
@@ -37,34 +45,42 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true });
     }
 
+    const attachmentsCheck = validateAttachmentPayloads(parsed.data.attachments);
+    if (!attachmentsCheck.ok) {
+      return NextResponse.json({ error: attachmentsCheck.message }, { status: 400 });
+    }
+
     const validation = validateKickoffAnswers(parsed.data.answers);
     if (!validation.ok) {
       return NextResponse.json({ error: validation.message }, { status: 400 });
     }
 
-    const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) {
+    if (!isKickoffEmailConfigured()) {
       return NextResponse.json(
         { error: "El envío por correo no está configurado todavía." },
         { status: 503 },
       );
     }
 
-    const answers = validation.answers;
+    const answers = withAttachmentAnswerSummary(
+      validation.answers,
+      parsed.data.attachments,
+    );
     const baseName = buildKickoffBaseName(answers);
     const [xlsx, pdf] = await Promise.all([
       buildKickoffWorkbook(answers),
       buildKickoffPdf(answers),
     ]);
 
+    const fileAttachments =
+      parsed.data.attachments?.map((file) => ({
+        filename: file.filename,
+        content: decodeAttachmentPayload(file),
+      })) ?? [];
+
     const brand = formatAnswerValue(answers.q5_nombre_marca);
     const contact = formatAnswerValue(answers.q1_nombre_responsable);
     const email = formatAnswerValue(answers.q3_email);
-
-    const resend = new Resend(apiKey);
-    const from =
-      process.env.RESEND_FROM?.trim() ||
-      "Casa Creativa Kickoff <kickoff@raulyn.com>";
 
     const summaryRows = [
       ["Marca", brand],
@@ -75,8 +91,7 @@ export async function POST(request: Request) {
       .map(([k, v]) => `<tr><td style="padding:6px 12px;border:1px solid #e8dfd3"><strong>${k}</strong></td><td style="padding:6px 12px;border:1px solid #e8dfd3">${v}</td></tr>`)
       .join("");
 
-    const { error } = await resend.emails.send({
-      from,
+    const sendError = await sendKickoffEmail({
       to: getNotifyEmails(),
       replyTo: typeof answers.q3_email === "string" ? answers.q3_email : undefined,
       subject: `Kickoff Casa Creativa — ${brand}`,
@@ -87,27 +102,19 @@ export async function POST(request: Request) {
           <table style="border-collapse:collapse;width:100%;font-size:14px">${summaryRows}</table>
           <p style="margin:24px 0 0;font-size:13px;color:#5c4f45">
             Respuestas completas en los adjuntos <strong>.xlsx</strong> y <strong>.pdf</strong>.
+            ${fileAttachments.length ? ` Además: <strong>${fileAttachments.length}</strong> archivo(s) de referencia.` : ""}
           </p>
         </div>
       `,
       attachments: [
-        {
-          filename: `${baseName}.xlsx`,
-          content: xlsx,
-        },
-        {
-          filename: `${baseName}.pdf`,
-          content: pdf,
-        },
+        { filename: `${baseName}.xlsx`, content: xlsx },
+        { filename: `${baseName}.pdf`, content: pdf },
+        ...fileAttachments,
       ],
     });
 
-    if (error) {
-      console.error("Resend error:", error);
-      return NextResponse.json(
-        { error: "No pudimos enviar el correo. Intenta de nuevo en unos minutos." },
-        { status: 502 },
-      );
+    if (sendError) {
+      return NextResponse.json({ error: sendError }, { status: 502 });
     }
 
     return NextResponse.json({ ok: true });

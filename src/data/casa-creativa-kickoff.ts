@@ -1,3 +1,5 @@
+export type KickoffAnswers = Record<string, string | string[]>;
+
 export type KickoffFieldType = "short" | "long" | "email" | "tel" | "single" | "multi";
 
 export type KickoffStep =
@@ -8,14 +10,79 @@ export type KickoffStep =
       id: string;
       label: string;
       hint?: string;
+      placeholder?: string;
       type: KickoffFieldType;
       required?: boolean;
+      allowAttachments?: boolean;
       options?: string[];
       followUpId?: string;
       followUpLabel?: string;
       followUpWhen?: (value: string | string[]) => boolean;
+      showWhen?: (answers: KickoffAnswers) => boolean;
     }
   | { kind: "thanks" };
+
+export const Q27_CRM_OPTION = "Integración con CRM o herramientas";
+
+export function isKickoffStepVisible(step: KickoffStep, answers: KickoffAnswers): boolean {
+  if (step.kind !== "question") return true;
+  if (!step.showWhen) return true;
+  return step.showWhen(answers);
+}
+
+export function getVisibleQuestionSteps(answers: KickoffAnswers) {
+  return kickoffSteps.filter(
+    (s): s is Extract<KickoffStep, { kind: "question" }> =>
+      s.kind === "question" && isKickoffStepVisible(s, answers),
+  );
+}
+
+export function findAdjacentStepIndex(
+  currentIndex: number,
+  answers: KickoffAnswers,
+  direction: 1 | -1,
+): number {
+  let index = currentIndex + direction;
+  while (index >= 0 && index < kickoffSteps.length) {
+    if (isKickoffStepVisible(kickoffSteps[index]!, answers)) {
+      return index;
+    }
+    index += direction;
+  }
+  return direction > 0 ? kickoffSteps.length - 1 : 0;
+}
+
+export function findLastQuestionIndex(answers: KickoffAnswers): number {
+  const thanksIndex = kickoffSteps.findIndex((s) => s.kind === "thanks");
+  for (let index = thanksIndex - 1; index >= 0; index -= 1) {
+    const step = kickoffSteps[index];
+    if (step?.kind === "question" && isKickoffStepVisible(step, answers)) {
+      return index;
+    }
+  }
+  return Math.max(0, thanksIndex - 1);
+}
+
+export function getKickoffExportLabels(answers: KickoffAnswers): { id: string; label: string }[] {
+  return kickoffQuestionLabels.filter(({ id }) => {
+    const asQuestion = kickoffSteps.find(
+      (s): s is Extract<KickoffStep, { kind: "question" }> => s.kind === "question" && s.id === id,
+    );
+    if (asQuestion) return isKickoffStepVisible(asQuestion, answers);
+
+    if (id === "q9_marca_archivos") {
+      return true;
+    }
+
+    const parent = kickoffSteps.find(
+      (s): s is Extract<KickoffStep, { kind: "question" }> =>
+        s.kind === "question" && s.followUpId === id,
+    );
+    if (parent) return isKickoffStepVisible(parent, answers);
+
+    return true;
+  });
+}
 
 export const KICKOFF_NOTIFY_EMAILS = [
   "hi@raulyn.com",
@@ -78,7 +145,8 @@ export const kickoffSteps: KickoffStep[] = [
     id: "q9_marca_descripcion",
     label: "Si ya tienen marca, descríbala o adjunte referencias",
     type: "long",
-    hint: "Puedes pegar enlaces o describir el estilo actual.",
+    allowAttachments: true,
+    hint: "Describe el estilo, pega enlaces o adjunta imágenes, PDF, .ai, .svg (máx. 6 archivos, 8 MB c/u).",
   },
   {
     kind: "section",
@@ -237,6 +305,8 @@ export const kickoffSteps: KickoffStep[] = [
     id: "q26_num_paginas",
     label: "Número aproximado de páginas o secciones",
     type: "short",
+    hint: "Ejemplo: Home — Servicios — Nuestra historia — Contacto, etc.",
+    placeholder: "Lista las secciones que imaginas…",
   },
   {
     kind: "section",
@@ -267,6 +337,11 @@ export const kickoffSteps: KickoffStep[] = [
     id: "q28_integraciones",
     label: "Detalles de integraciones o funcionalidades especiales",
     type: "long",
+    hint: "Indique CRM, herramientas y el tipo de integración que necesitan.",
+    showWhen: (answers) => {
+      const selected = answers.q27_funcionalidades;
+      return Array.isArray(selected) && selected.includes(Q27_CRM_OPTION);
+    },
   },
   {
     kind: "section",
@@ -288,27 +363,8 @@ export const kickoffSteps: KickoffStep[] = [
   },
   {
     kind: "question",
-    id: "q31_seo",
-    label: "¿Necesitan redacción SEO o copywriting?",
-    type: "single",
-    options: ["Sí", "No", "A definir"],
-  },
-  {
-    kind: "question",
     id: "q32_plazo",
     label: "Plazo deseado aproximado",
-    type: "short",
-  },
-  {
-    kind: "question",
-    id: "q33_presupuesto",
-    label: "Presupuesto estimado o rango (opcional)",
-    type: "short",
-  },
-  {
-    kind: "question",
-    id: "q34_kickoff_fecha",
-    label: "Fecha ideal de kickoff",
     type: "short",
   },
   {
@@ -320,8 +376,6 @@ export const kickoffSteps: KickoffStep[] = [
   { kind: "thanks" },
 ];
 
-export type KickoffAnswers = Record<string, string | string[]>;
-
 export const kickoffQuestionLabels: { id: string; label: string }[] = kickoffSteps
   .filter((s): s is Extract<KickoffStep, { kind: "question" }> => s.kind === "question")
   .flatMap((s) => {
@@ -330,6 +384,12 @@ export const kickoffQuestionLabels: { id: string; label: string }[] = kickoffSte
       rows.push({
         id: s.followUpId,
         label: s.followUpLabel ?? `${s.label} (detalle)`,
+      });
+    }
+    if (s.allowAttachments) {
+      rows.push({
+        id: "q9_marca_archivos",
+        label: "Archivos de referencia adjuntos",
       });
     }
     return rows;

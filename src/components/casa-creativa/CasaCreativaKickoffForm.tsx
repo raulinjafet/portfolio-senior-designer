@@ -2,17 +2,26 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
+  findAdjacentStepIndex,
+  findLastQuestionIndex,
+  getVisibleQuestionSteps,
   kickoffSteps,
+  Q27_CRM_OPTION,
   type KickoffAnswers,
   type KickoffStep,
 } from "@/data/casa-creativa-kickoff";
+import {
+  filesToAttachmentPayloads,
+  formatFileSize,
+  KICKOFF_FILE_ACCEPT,
+  KICKOFF_MAX_FILE_BYTES,
+  KICKOFF_MAX_FILES,
+} from "@/lib/casa-creativa/kickoff-attachments";
 
-const questionSteps = kickoffSteps.filter((s) => s.kind === "question");
-const totalQuestions = questionSteps.length;
-
-function getQuestionNumber(step: KickoffStep): number | null {
+function getQuestionNumber(step: KickoffStep, answers: KickoffAnswers): number | null {
   if (step.kind !== "question") return null;
-  return questionSteps.findIndex((q) => q.id === step.id) + 1;
+  const visible = getVisibleQuestionSteps(answers);
+  return visible.findIndex((q) => q.id === step.id) + 1;
 }
 
 function isStepValid(step: KickoffStep, answers: KickoffAnswers): boolean {
@@ -46,12 +55,17 @@ export default function CasaCreativaKickoffForm() {
   const [direction, setDirection] = useState<"fwd" | "back">("fwd");
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [referenceFiles, setReferenceFiles] = useState<File[]>([]);
+  const [fileError, setFileError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const step = kickoffSteps[stepIndex];
+  const step = kickoffSteps[stepIndex]!;
+  const visibleQuestionCount = getVisibleQuestionSteps(answers).length;
+  const questionNumber = step.kind === "question" ? getQuestionNumber(step, answers) : null;
   const progress =
-    step.kind === "question"
-      ? getQuestionNumber(step)! / totalQuestions
+    step.kind === "question" && questionNumber
+      ? questionNumber / visibleQuestionCount
       : step.kind === "thanks"
         ? 1
         : stepIndex / (kickoffSteps.length - 1);
@@ -62,16 +76,19 @@ export default function CasaCreativaKickoffForm() {
     if (!canContinue) return;
 
     const isLastQuestion =
-      step.kind === "question" && stepIndex === kickoffSteps.findIndex((s) => s.kind === "thanks") - 1;
+      step.kind === "question" && stepIndex === findLastQuestionIndex(answers);
 
     if (isLastQuestion) {
       setSubmitting(true);
       setSubmitError(null);
       try {
+        const attachments =
+          referenceFiles.length > 0 ? await filesToAttachmentPayloads(referenceFiles) : undefined;
+
         const res = await fetch("/api/casa-creativa/kickoff", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ answers, website: "" }),
+          body: JSON.stringify({ answers, attachments, website: "" }),
         });
         const data = (await res.json()) as { ok?: boolean; error?: string };
         if (!res.ok) {
@@ -80,7 +97,7 @@ export default function CasaCreativaKickoffForm() {
           return;
         }
         setDirection("fwd");
-        setStepIndex((i) => i + 1);
+        setStepIndex(findAdjacentStepIndex(stepIndex, answers, 1));
       } catch {
         setSubmitError("Error de conexión. Revisa tu red e intenta de nuevo.");
       } finally {
@@ -89,18 +106,58 @@ export default function CasaCreativaKickoffForm() {
       return;
     }
 
+    if (step.kind === "question" && step.id === "q27_funcionalidades") {
+      const selected = answers.q27_funcionalidades;
+      const needsIntegrationDetails =
+        Array.isArray(selected) && selected.includes(Q27_CRM_OPTION);
+      if (!needsIntegrationDetails && answers.q28_integraciones) {
+        setAnswers((prev) => {
+          const { q28_integraciones: _, ...rest } = prev;
+          return rest;
+        });
+      }
+    }
+
     setDirection("fwd");
-    setStepIndex((i) => Math.min(i + 1, kickoffSteps.length - 1));
-  }, [answers, canContinue, step.kind, stepIndex]);
+    setStepIndex(findAdjacentStepIndex(stepIndex, answers, 1));
+  }, [answers, canContinue, referenceFiles, step.kind, stepIndex]);
 
   const goBack = useCallback(() => {
     if (stepIndex === 0 || step.kind === "thanks") return;
     setDirection("back");
-    setStepIndex((i) => Math.max(i - 1, 0));
-  }, [step.kind, stepIndex]);
+    setStepIndex(findAdjacentStepIndex(stepIndex, answers, -1));
+  }, [answers, step.kind, stepIndex]);
 
   const setField = (id: string, value: string | string[]) => {
     setAnswers((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const addReferenceFiles = (incoming: FileList | null) => {
+    if (!incoming?.length) return;
+    setFileError(null);
+
+    const next = [...referenceFiles];
+    for (const file of Array.from(incoming)) {
+      if (next.length >= KICKOFF_MAX_FILES) {
+        setFileError(`Máximo ${KICKOFF_MAX_FILES} archivos.`);
+        break;
+      }
+      if (file.size > KICKOFF_MAX_FILE_BYTES) {
+        setFileError(`${file.name} supera ${formatFileSize(KICKOFF_MAX_FILE_BYTES)}.`);
+        continue;
+      }
+      const duplicate = next.some(
+        (existing) => existing.name === file.name && existing.size === file.size,
+      );
+      if (!duplicate) next.push(file);
+    }
+    setReferenceFiles(next);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const removeReferenceFile = (index: number) => {
+    setReferenceFiles((files) => files.filter((_, i) => i !== index));
+    setFileError(null);
   };
 
   const toggleMulti = (id: string, option: string) => {
@@ -147,7 +204,7 @@ export default function CasaCreativaKickoffForm() {
             value={typeof value === "string" ? value : ""}
             onChange={(e) => setField(q.id, e.target.value)}
             autoComplete={q.type === "email" ? "email" : "name"}
-            placeholder="Escribe tu respuesta…"
+            placeholder={q.placeholder ?? "Escribe tu respuesta…"}
           />
         )}
 
@@ -158,8 +215,56 @@ export default function CasaCreativaKickoffForm() {
             value={typeof value === "string" ? value : ""}
             onChange={(e) => setField(q.id, e.target.value)}
             rows={5}
-            placeholder="Escribe tu respuesta…"
+            placeholder={q.placeholder ?? "Escribe tu respuesta…"}
           />
+        )}
+
+        {q.allowAttachments && (
+          <div className="cc-kickoff-upload">
+            <input
+              ref={fileInputRef}
+              type="file"
+              className="cc-kickoff-file-input"
+              multiple
+              accept={KICKOFF_FILE_ACCEPT}
+              onChange={(e) => addReferenceFiles(e.target.files)}
+            />
+            <button
+              type="button"
+              className="cc-kickoff-upload-btn"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              Adjuntar archivos
+            </button>
+            <p className="cc-kickoff-upload-meta">
+              Imágenes, PDF, .ai, .svg, .zip · hasta {KICKOFF_MAX_FILES} archivos
+            </p>
+            {fileError && (
+              <p className="cc-kickoff-error" role="alert">
+                {fileError}
+              </p>
+            )}
+            {referenceFiles.length > 0 && (
+              <ul className="cc-kickoff-file-list">
+                {referenceFiles.map((file, index) => (
+                  <li key={`${file.name}-${file.size}-${index}`}>
+                    <span>
+                      {file.name}
+                      <span className="cc-kickoff-file-size">{formatFileSize(file.size)}</span>
+                    </span>
+                    <button
+                      type="button"
+                      className="cc-kickoff-file-remove"
+                      onClick={() => removeReferenceFile(index)}
+                      aria-label={`Quitar ${file.name}`}
+                    >
+                      ×
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         )}
 
         {q.type === "single" && q.options && (
@@ -226,8 +331,7 @@ export default function CasaCreativaKickoffForm() {
   };
 
   const isLastQuestion =
-    step.kind === "question" &&
-    stepIndex === kickoffSteps.findIndex((s) => s.kind === "thanks") - 1;
+    step.kind === "question" && stepIndex === findLastQuestionIndex(answers);
 
   return (
     <div className="cc-kickoff-shell">
@@ -255,7 +359,9 @@ export default function CasaCreativaKickoffForm() {
               Con este cuestionario queremos tocar el alma de la compañía y encontrar el mejor enfoque
               para el proyecto: objetivo del sitio, estilo gráfico y contenido alineado con su necesidad.
             </p>
-            <p className="cc-kickoff-meta">Unas 10–15 min · {totalQuestions} preguntas</p>
+            <p className="cc-kickoff-meta">
+              Unas 10–15 min · {getVisibleQuestionSteps(answers).length} preguntas
+            </p>
           </div>
         )}
 
@@ -270,7 +376,7 @@ export default function CasaCreativaKickoffForm() {
         {step.kind === "question" && (
           <div className="cc-kickoff-question">
             <p className="cc-kickoff-q-index">
-              {getQuestionNumber(step)} <span>→</span> {totalQuestions}
+              {questionNumber} <span>→</span> {visibleQuestionCount}
             </p>
             <h2 className="cc-kickoff-q-label">
               {step.label}
